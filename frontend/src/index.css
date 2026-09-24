@@ -3094,25 +3094,25 @@ textarea { resize: vertical; min-height: 100px; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%);
-  color: #0369a1;
-  border: 1.5px solid #7dd3fc;
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  color: #c2410c;
+  border: 1.5px solid #fb923c;
   padding: 8px 16px;
   border-radius: 9999px;
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 2px 6px rgba(0, 186, 242, 0.12);
+  box-shadow: 0 2px 6px rgba(249, 115, 22, 0.15);
   white-space: nowrap;
   font-family: inherit;
 }
 
 .demo-upload-pill-btn:hover {
-  background: linear-gradient(135deg, #00BAF2 0%, #002970 100%);
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
   color: #ffffff;
-  border-color: #00BAF2;
-  box-shadow: 0 4px 14px rgba(0, 186, 242, 0.32);
+  border-color: #f97316;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
   transform: translateY(-1px);
 }
 

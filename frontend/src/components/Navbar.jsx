@@ -100,17 +100,7 @@ export default function Navbar() {
             <span style={{ fontSize: '15px' }}>&rarr;</span>
           </button>
 
-          <button
-            type="button"
-            className="paytm-signin-btn"
-            onClick={() => navigate('/upload')}
-            title="Account"
-          >
-            <div className="signin-avatar-circle">
-              <UserIcon />
-            </div>
-            <span>Sign In</span>
-          </button>
+
         </div>
       </div>
     </nav>
