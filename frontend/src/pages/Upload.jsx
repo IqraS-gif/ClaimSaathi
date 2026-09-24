@@ -341,6 +341,62 @@ export default function Upload() {
     }
   }
 
+  // Demo 1-click auto-upload for instant evaluation
+  const handleLoadDemo = () => {
+    const demoFile = new File(
+      [
+        'STAR HEALTH AND ALLIED INSURANCE COMPANY LIMITED\n' +
+        'Policy Schedule — MediClassic Individual Health Insurance\n' +
+        'Policy Number: POL-STAR-2026-9812\n' +
+        'Insured: Rahul Verma\n' +
+        'Sum Insured: Rs. 5,00,000\n' +
+        'Room Rent Limit: Rs. 3,000 per day (Twin Sharing / Semi-Private AC)\n' +
+        'Co-Payment: 10% on admissible hospitalisation claims\n' +
+        'Network Hospitals: Fortis Memorial, Max Super Speciality, Apollo Hospitals\n' +
+        'Exclusions: Cosmetic surgery, dental care, lasik vision correction, obesity, maternity\n'
+      ],
+      'Star_Health_Policy_Demo.pdf',
+      { type: 'application/pdf' }
+    )
+    setFiles([demoFile])
+    setLoading(true)
+    setError(null)
+
+    setTimeout(() => {
+      setResult({
+        upload_id: 'demo-policy-9821',
+        doc_type: 'policy',
+        patient_name: 'Rahul Verma',
+        policy_number: 'POL-STAR-2026-9812',
+        extracted: {
+          sum_insured: 500000,
+          room_rent_limit: '₹3,000/day (Twin Sharing)',
+          co_pay_percent: 10,
+          waiting_period: '2 Years for Pre-Existing',
+          pre_existing_covered: true,
+          network_hospitals: [
+            'Fortis Memorial Research Institute',
+            'Max Super Speciality Hospital',
+            'Apollo Hospitals',
+          ],
+          exclusions: [
+            'Cosmetic / Aesthetic Procedures',
+            'Dental Surgery (except accident)',
+            'Lasik / Vision Correction (< 7.5 D)',
+            'Obesity / Bariatric Surgery',
+            'Maternity & Childbirth',
+          ],
+          raw_text_preview: 'Star Health MediClassic Individual Health Insurance Schedule...',
+        },
+        plain_summary:
+          'Comprehensive individual health insurance policy with ₹5 Lakh sum insured, ₹3,000/day twin sharing room rent limit, and 10% mandatory co-payment.',
+        created_at: new Date().toISOString(),
+      })
+      setLoading(false)
+    }, 600)
+  }
+
+
   const getExclusionItem = (rawText) => {
     const lower = rawText.toLowerCase()
     for (const [key, val] of Object.entries(EXCLUSIONS_KNOWLEDGE)) {
@@ -442,18 +498,29 @@ export default function Upload() {
                   </div>
                   <span className="header-title">Upload Your Policy Document</span>
                 </div>
-                <div className="secure-badge-pill">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0284C7" strokeWidth="2.5">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    <path d="M9 12l2 2 4-4" />
-                  </svg>
-                  <span>100% Secure</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                  <button
+                    type="button"
+                    className="demo-upload-pill-btn"
+                    onClick={handleLoadDemo}
+                    title="Load sample Star Health policy document & auto-analyze"
+                  >
+                    <span className="demo-badge-icon">⚡</span>
+                    <span>Auto-Upload Demo Document</span>
+                  </button>
+                  <div className="secure-badge-pill">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0284C7" strokeWidth="2.5">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      <path d="M9 12l2 2 4-4" />
+                    </svg>
+                    <span>100% Secure</span>
+                  </div>
                 </div>
               </div>
 
               {/* Dropzone Container */}
               <div className="policy-dropzone-wrap">
-                <FileUploadZone onFileSelect={setFiles} />
+                <FileUploadZone externalFiles={files} onFileSelect={setFiles} />
               </div>
 
               {error && (
@@ -906,6 +973,73 @@ export default function Upload() {
                 </div>
               </div>
 
+            </div>
+
+            {/* ── SARVAM AI CONTEXT ASSISTANT BANNER (POLICY) ── */}
+            <div className="sarvam-chat-banner">
+              <div className="sarvam-chat-banner-left">
+                <div className="sarvam-chat-badge">
+                  <span className="dot animate-pulse" />
+                  <span>Sarvam AI Assistant • Policy Coverage Context</span>
+                </div>
+                <h4>Have questions about your health insurance policy?</h4>
+                <p>
+                  Ask our Sarvam AI assistant in English, हिंदी, or Hinglish about specific surgery coverage, room upgrade penalties, or cashless network hospital admissions.
+                </p>
+              </div>
+              <div className="sarvam-chat-banner-actions">
+                <button
+                  type="button"
+                  className="sarvam-pill-btn"
+                  onClick={() =>
+                    window.dispatchEvent(
+                      new CustomEvent('open-saathi-chat', {
+                        detail: { prompt: 'Is single deluxe room covered in my policy?' },
+                      })
+                    )
+                  }
+                >
+                  ⚡ Single Room Limit?
+                </button>
+                <button
+                  type="button"
+                  className="sarvam-pill-btn"
+                  onClick={() =>
+                    window.dispatchEvent(
+                      new CustomEvent('open-saathi-chat', {
+                        detail: { prompt: 'What are the major exclusions in my policy?' },
+                      })
+                    )
+                  }
+                >
+                  ⚡ Check Exclusions
+                </button>
+                <button
+                  type="button"
+                  className="sarvam-pill-btn"
+                  onClick={() =>
+                    window.dispatchEvent(
+                      new CustomEvent('open-saathi-chat', {
+                        detail: { prompt: 'Is Fortis Hospital cashless under my policy?' },
+                      })
+                    )
+                  }
+                >
+                  ⚡ Fortis Cashless?
+                </button>
+                <button
+                  type="button"
+                  className="sarvam-chat-launch-btn"
+                  onClick={() =>
+                    window.dispatchEvent(new CustomEvent('open-saathi-chat', { detail: {} }))
+                  }
+                >
+                  <span>Chat with Saathi AI</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
             </div>
 
             {/* ── BOTTOM ACTIONS ── */}

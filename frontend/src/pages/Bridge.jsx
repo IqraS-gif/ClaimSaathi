@@ -227,6 +227,60 @@ export default function Bridge() {
                 ))}
               </div>
 
+              {/* ── SARVAM AI CONTEXT ASSISTANT BANNER (FINANCIAL BRIDGE) ── */}
+              <div className="sarvam-chat-banner" style={{ margin: '20px 0 10px' }}>
+                <div className="sarvam-chat-banner-left">
+                  <div className="sarvam-chat-badge">
+                    <span className="dot animate-pulse" />
+                    <span>Sarvam AI Assistant • Financial Bridge Context</span>
+                  </div>
+                  <h4>Need guidance on 0% EMI or 45-day TPA Grace Advance?</h4>
+                  <p>
+                    Ask our Sarvam AI assistant in English, हिंदी, or Hinglish about eligibility, disbursal to the hospital cashier counter, or repayment tenure.
+                  </p>
+                </div>
+                <div className="sarvam-chat-banner-actions">
+                  <button
+                    type="button"
+                    className="sarvam-pill-btn"
+                    onClick={() =>
+                      window.dispatchEvent(
+                        new CustomEvent('open-saathi-chat', {
+                          detail: { prompt: 'How does the 0% No-Cost EMI work for hospital bills?' },
+                        })
+                      )
+                    }
+                  >
+                    ⚡ How 0% EMI works?
+                  </button>
+                  <button
+                    type="button"
+                    className="sarvam-pill-btn"
+                    onClick={() =>
+                      window.dispatchEvent(
+                        new CustomEvent('open-saathi-chat', {
+                          detail: { prompt: 'How does 45-day TPA reimbursement bridge work?' },
+                        })
+                      )
+                    }
+                  >
+                    ⚡ 45-Day Grace Advance?
+                  </button>
+                  <button
+                    type="button"
+                    className="sarvam-chat-launch-btn"
+                    onClick={() =>
+                      window.dispatchEvent(new CustomEvent('open-saathi-chat', { detail: {} }))
+                    }
+                  >
+                    <span>Chat with Saathi AI</span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
               {error && <div className="alert-box error" style={{ marginTop: '12px' }}>{error}</div>}
               <div className="form-actions" style={{ marginTop: '24px' }}>
                 <span />

@@ -2199,5 +2199,973 @@ textarea { resize: vertical; min-height: 100px; }
   }
 }
 
+/* ==========================================================================
+   SARVAM AI ASSISTANT CONTEXT BANNERS & PROMPT CHIPS
+   ========================================================================== */
+.sarvam-chat-banner {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #eff6ff 100%);
+  border: 1.5px solid #bae6fd;
+  border-radius: 20px;
+  padding: 24px 28px;
+  margin: 28px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  box-shadow: 0 10px 25px -5px rgba(0, 186, 242, 0.12), 0 4px 10px -2px rgba(0, 41, 112, 0.05);
+  position: relative;
+  overflow: hidden;
+}
 
+.sarvam-chat-banner::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(0, 186, 242, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
 
+.sarvam-chat-banner-left {
+  flex: 1;
+}
+
+.sarvam-chat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #FFFFFF;
+  border: 1px solid #7dd3fc;
+  color: #0369a1;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.sarvam-chat-badge .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: #10b981;
+}
+
+.sarvam-chat-banner-left h4 {
+  font-size: 17px;
+  font-weight: 800;
+  color: #002970;
+  margin: 0 0 6px;
+  letter-spacing: -0.2px;
+}
+
+.sarvam-chat-banner-left p {
+  font-size: 13.5px;
+  color: #475569;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.sarvam-chat-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sarvam-pill-btn {
+  background: #FFFFFF;
+  border: 1.5px solid #93c5fd;
+  color: #002970;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 5px rgba(0, 41, 112, 0.04);
+  white-space: nowrap;
+}
+
+.sarvam-pill-btn:hover {
+  background: #002970;
+  color: #FFFFFF;
+  border-color: #002970;
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 14px rgba(0, 41, 112, 0.18);
+}
+
+.sarvam-chat-launch-btn {
+  background: linear-gradient(135deg, #002970 0%, #004294 50%, #00BAF2 100%);
+  color: #FFFFFF;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 18px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 6px 16px rgba(0, 41, 112, 0.25);
+  white-space: nowrap;
+}
+
+.sarvam-chat-launch-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 186, 242, 0.4);
+}
+
+@media (max-width: 900px) {
+  .sarvam-chat-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+  .sarvam-chat-banner-actions {
+    width: 100%;
+    margin-top: 8px;
+  }
+}
+
+/* ==========================================================================
+   PAYTM PORTAL NAVBAR (EXACT SCREENSHOT SPECIFICATION)
+   ========================================================================== */
+.paytm-portal-nav {
+  height: 72px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E2E8F0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+}
+
+.paytm-portal-nav .nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.paytm-main-logo {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+}
+
+.paytm-brand-dark {
+  font-size: 26px;
+  font-weight: 900;
+  color: #002970;
+  letter-spacing: -0.5px;
+}
+
+.paytm-brand-cyan {
+  font-size: 26px;
+  font-weight: 900;
+  color: #00BAF2;
+  letter-spacing: -0.5px;
+}
+
+.paytm-logo-badge {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #002970;
+  background: #E8F7FE;
+  border: 1px solid #BAE6FD;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  letter-spacing: 0.2px;
+}
+
+.paytm-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.paytm-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  padding: 8px 2px;
+  position: relative;
+}
+
+.paytm-nav-item:hover {
+  color: #00BAF2;
+}
+
+.paytm-nav-item.active-feature {
+  color: #00BAF2;
+  font-weight: 700;
+}
+
+.paytm-nav-item.active-feature::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  background: #00BAF2;
+  border-radius: 9999px;
+}
+
+.paytm-nav-item.saathi-ai-pill {
+  background: #F0F8FF;
+  border: 1px solid #BAE6FD;
+  border-radius: 9999px;
+  padding: 5px 12px;
+  color: #002970;
+  font-weight: 700;
+  font-size: 12.5px;
+  transition: all 0.2s ease;
+}
+
+.paytm-nav-item.saathi-ai-pill:hover {
+  background: #002970;
+  color: #FFFFFF;
+  border-color: #002970;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 41, 112, 0.15);
+}
+
+.paytm-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.paytm-cta-btn {
+  background: #00BAF2;
+  color: #FFFFFF;
+  border: none;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 186, 242, 0.3);
+}
+
+.paytm-cta-btn:hover {
+  background: #009ad0;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 186, 242, 0.45);
+}
+
+.paytm-signin-btn {
+  background: #002970;
+  color: #FFFFFF;
+  border: none;
+  padding: 7px 18px 7px 9px;
+  border-radius: 9999px;
+  font-size: 13.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 41, 112, 0.2);
+}
+
+.paytm-signin-btn:hover {
+  background: #001f57;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 41, 112, 0.3);
+}
+
+.signin-avatar-circle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 992px) {
+  .paytm-nav-menu {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   LANDING PAGE — EXACT SCREENSHOT HERO & GRAPHICS
+   ========================================================================== */
+.landing-page-wrapper {
+  background: #FFFFFF;
+  min-height: 100vh;
+  padding-top: 72px;
+}
+
+/* Breadcrumb */
+.landing-breadcrumb-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 24px 24px 8px;
+  font-size: 12.5px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+}
+
+.crumb-link {
+  color: #64748b;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.crumb-link:hover {
+  color: #00BAF2;
+}
+
+.crumb-sep {
+  margin: 0 8px;
+  color: #cbd5e1;
+}
+
+.crumb-current {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+/* Hero Section */
+.landing-hero-section {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 16px 24px 80px;
+}
+
+.landing-hero-container {
+  display: grid;
+  grid-template-columns: 1fr 1.08fr;
+  gap: 48px;
+  align-items: center;
+}
+
+/* Left Hero Column */
+.landing-hero-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.claimsaathi-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #E8F7FE;
+  border: 1.5px solid #BAE6FD;
+  border-radius: 9999px;
+  padding: 5px 14px 5px 6px;
+  width: fit-content;
+  margin-bottom: 24px;
+}
+
+.badge-shield-circle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 186, 242, 0.2);
+}
+
+.badge-title {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #002970;
+}
+
+.badge-divider {
+  color: #93c5fd;
+  font-size: 12px;
+}
+
+.badge-sub {
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.landing-hero-heading {
+  font-size: clamp(38px, 4.4vw, 58px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  color: #0A1628;
+  margin: 0 0 20px;
+  text-transform: uppercase;
+}
+
+.heading-highlight-cyan {
+  color: #00BAF2;
+}
+
+.landing-hero-paragraph {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #475569;
+  max-width: 480px;
+  margin: 0 0 32px;
+}
+
+/* Hero Pill Action Buttons */
+.landing-hero-buttons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-cyan-pill-btn {
+  background: #00BAF2;
+  color: #FFFFFF;
+  border: none;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 13px 28px;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 20px -2px rgba(0, 186, 242, 0.4);
+}
+
+.hero-cyan-pill-btn:hover {
+  background: #009ad0;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px -2px rgba(0, 186, 242, 0.5);
+}
+
+.hero-outline-pill-btn {
+  background: #FFFFFF;
+  color: #00BAF2;
+  border: 2px solid #00BAF2;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 11px 26px;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-outline-pill-btn:hover {
+  background: #f0f9ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 186, 242, 0.15);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   RIGHT HERO VISUAL: BACKDROP, IPHONE & FLOATING CARDS
+   ───────────────────────────────────────────────────────────────────────────── */
+.landing-hero-right {
+  position: relative;
+  width: 100%;
+}
+
+.landing-visual-backdrop {
+  background: linear-gradient(145deg, #F0F8FF 0%, #E8F4FD 100%);
+  border-radius: 36px;
+  padding: 44px 24px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 530px;
+}
+
+/* Floating Left Badges */
+.floating-left-badge {
+  position: absolute;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 9999px;
+  padding: 7px 16px 7px 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #0F172A;
+  box-shadow: 0 10px 25px -4px rgba(0, 41, 112, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04);
+  z-index: 5;
+  transition: transform 0.2s ease;
+}
+
+.floating-left-badge:hover {
+  transform: translateY(-2px);
+}
+
+.floating-left-badge.faster-claims {
+  top: 230px;
+  left: 6px;
+}
+
+.floating-left-badge.clearer-coverage {
+  top: 320px;
+  left: 6px;
+}
+
+.badge-icon-wrap.cyan-bg {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #E0F4FE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* iPhone Device Mockup */
+.landing-iphone-mockup {
+  width: 245px;
+  height: 485px;
+  background: #FFFFFF;
+  border-radius: 38px;
+  border: 8px solid #1E293B;
+  box-shadow: 0 25px 60px -10px rgba(0, 41, 112, 0.22), 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.iphone-notch-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px 4px;
+  background: #FFFFFF;
+}
+
+.iphone-time {
+  font-size: 10px;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.iphone-island {
+  width: 50px;
+  height: 14px;
+  background: #0F172A;
+  border-radius: 12px;
+}
+
+.iphone-screen-content {
+  padding: 8px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.iphone-app-header {
+  text-align: center;
+}
+
+.iphone-paytm-brand {
+  font-size: 15px;
+  font-weight: 900;
+  margin-bottom: 2px;
+}
+
+.iphone-paytm-brand .paytm-dark {
+  color: #002970;
+}
+
+.iphone-paytm-brand .paytm-cyan {
+  color: #00BAF2;
+}
+
+.iphone-saathi-identity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #002970;
+}
+
+.iphone-saathi-tagline {
+  font-size: 9px;
+  color: #64748B;
+  line-height: 1.3;
+  margin: 3px auto 10px;
+  max-width: 170px;
+}
+
+.iphone-tiles-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.iphone-tile-row {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 7px 9px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.iphone-tile-row:hover {
+  background: #F0F8FF;
+  border-color: #BAE6FD;
+}
+
+.tile-icon-box {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
+}
+
+.tile-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #1E293B;
+  margin-left: 6px;
+  flex: 1;
+  text-align: left;
+}
+
+.iphone-bottom-support-pill {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+}
+
+.support-currency-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #EDE9FE;
+  color: #7C3AED;
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.support-text-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.support-title {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.support-sub {
+  font-size: 8.5px;
+  font-weight: 600;
+  color: #64748B;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   FLOATING OVERLAY CARDS (POLICY & BILL ANALYSIS)
+   ───────────────────────────────────────────────────────────────────────────── */
+.floating-card-mockup {
+  position: absolute;
+  background: #FFFFFF;
+  border-radius: 18px;
+  border: 1px solid #E2E8F0;
+  padding: 14px 16px;
+  box-shadow: 0 16px 36px -6px rgba(0, 41, 112, 0.16), 0 4px 12px rgba(0, 0, 0, 0.05);
+  z-index: 10;
+  width: 228px;
+  transition: transform 0.2s ease;
+}
+
+.floating-card-mockup:hover {
+  transform: translateY(-2px);
+}
+
+.policy-analysis-card {
+  top: 36px;
+  right: -24px;
+}
+
+.bill-analysis-card {
+  bottom: 42px;
+  right: -24px;
+}
+
+.floating-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.card-head-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-head-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.completed-tag.green {
+  background: #DCFCE7;
+  color: #15803D;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  letter-spacing: 0.5px;
+}
+
+.floating-card-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.analysis-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.analysis-row .row-left {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #334155;
+  font-weight: 600;
+}
+
+.analysis-row .row-status.green {
+  color: #15803D;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.analysis-row .badge-found.red {
+  background: #FEE2E2;
+  color: #DC2626;
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+/* Bill Metric Rows */
+.bill-metric-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.bill-metric-row .metric-left {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #334155;
+  font-weight: 600;
+}
+
+.bill-metric-row .plus-sign {
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.plus-sign.blue { color: #0284C7; }
+.plus-sign.green { color: #16A34A; }
+.plus-sign.coral { color: #E11D48; }
+
+.metric-amount {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.metric-amount.dark { color: #0F172A; }
+.metric-amount.green { color: #16A34A; }
+.metric-amount.coral { color: #E11D48; }
+
+/* Responsive adjustments */
+@media (max-width: 1080px) {
+  .policy-analysis-card {
+    right: 0;
+  }
+  .bill-analysis-card {
+    right: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .landing-hero-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .landing-hero-right {
+    display: flex;
+    justify-content: center;
+  }
+  .landing-visual-backdrop {
+    width: 100%;
+    max-width: 480px;
+    min-height: auto;
+  }
+  .floating-card-mockup {
+    position: static;
+    margin: 12px auto 0;
+    width: 100%;
+    max-width: 260px;
+  }
+  .floating-left-badge {
+    display: none;
+}
+}
+
+/* ── Quick Demo Auto-Upload Elements ── */
+.demo-upload-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%);
+  color: #0369a1;
+  border: 1.5px solid #7dd3fc;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 6px rgba(0, 186, 242, 0.12);
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.demo-upload-pill-btn:hover {
+  background: linear-gradient(135deg, #00BAF2 0%, #002970 100%);
+  color: #ffffff;
+  border-color: #00BAF2;
+  box-shadow: 0 4px 14px rgba(0, 186, 242, 0.32);
+  transform: translateY(-1px);
+}
+
+.demo-upload-pill-btn:active {
+  transform: translateY(0);
+}
+
+.demo-badge-icon {
+  font-size: 14px;
+  display: inline-block;
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.85;
+  }
+}
+
+.simulator-demo-banner {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border: 1.5px dashed #38bdf8;
+  border-radius: 16px;
+  padding: 14px 22px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 2px 10px rgba(0, 186, 242, 0.06);
+}
+
+.demo-banner-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #0369a1;
+}
+
+@media (max-width: 720px) {
+  .simulator-demo-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .demo-upload-pill-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

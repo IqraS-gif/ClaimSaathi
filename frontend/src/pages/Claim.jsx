@@ -166,6 +166,60 @@ export default function Claim() {
     }
   }
 
+  const handleLoadDemo = () => {
+    const demoBill = new File(
+      [
+        'FORTIS MEMORIAL RESEARCH INSTITUTE\n' +
+        'Sector 44, Gurugram, Haryana - 122002\n' +
+        'FINAL INPATIENT BILL & DISCHARGE SUMMARY\n' +
+        'Bill No: FMRI-2026-88412 | Date: 24-Sep-2026\n' +
+        'Patient Name: Rahul Verma | Age: 36 | Gender: Male\n' +
+        'Admission: 18-Sep-2026 | Discharge: 23-Sep-2026 (5 Days)\n' +
+        'Diagnosis: Acute Laparoscopic Appendicitis\n' +
+        'Room Category Chosen: Single Deluxe AC Room (@ Rs. 6,000/day)\n' +
+        'Room Charges: Rs. 30,000\n' +
+        'Nursing Care: Rs. 10,000\n' +
+        'Surgeon & OT Charges: Rs. 75,000\n' +
+        'Specialist & Doctor Consultations: Rs. 15,000\n' +
+        'Pharmacy & Medications: Rs. 25,000\n' +
+        'Investigations & Abdominal CT: Rs. 25,000\n' +
+        'Non-Payable Consumables & PPE: Rs. 20,000\n' +
+        'TOTAL BILL AMOUNT: Rs. 2,00,000\n'
+      ],
+      'Fortis_Hospital_Bill_Demo.pdf',
+      { type: 'application/pdf' }
+    )
+
+    const demoPolicy = new File(
+      [
+        'STAR HEALTH AND ALLIED INSURANCE COMPANY LIMITED\n' +
+        'Policy Schedule: MediClassic Individual Health Insurance\n' +
+        'Policy Number: POL-STAR-2026-9812\n' +
+        'Insured: Rahul Verma\n' +
+        'Sum Insured: Rs. 5,00,000\n' +
+        'Room Rent Limit: Rs. 3,000/day (Twin Sharing)\n' +
+        'Proportionate Clause: Clause 3.2 Applicable on Room Upgrades\n' +
+        'Co-Payment: Clause 5.1 - 10% Mandatory Co-pay\n' +
+        'Non-Payables: IRDAI Standard Non-Payables Excluded\n'
+      ],
+      'Star_Health_Policy_Demo.pdf',
+      { type: 'application/pdf' }
+    )
+
+    setBillFiles([demoBill])
+    setPolicyFiles([demoPolicy])
+    setLoading(true)
+    setError(null)
+
+    setTimeout(() => {
+      setSimulation(SAMPLE_SIMULATION)
+      try {
+        localStorage.setItem('latest_simulation', JSON.stringify(SAMPLE_SIMULATION))
+      } catch {}
+      setLoading(false)
+    }, 600)
+  }
+
   const formatCurrency = (val) => `₹${Number(val || 0).toLocaleString('en-IN')}`
 
   const gap = simulation ? simulation.you_pay : 70000
@@ -249,6 +303,23 @@ export default function Claim() {
         {/* ── UPLOAD STATE ── */}
         {!simulation && (
           <div style={{ maxWidth: '980px', margin: '0 auto' }}>
+            {/* Quick Demo Auto-Upload Banner */}
+            <div className="simulator-demo-banner">
+              <div className="demo-banner-text">
+                <span className="demo-badge-icon">⚡</span>
+                <span>Testing the simulator? Click to auto-load sample hospital bill &amp; policy documents.</span>
+              </div>
+              <button
+                type="button"
+                className="demo-upload-pill-btn"
+                onClick={handleLoadDemo}
+                title="Auto-load sample Fortis bill and Star Health policy"
+              >
+                <span className="demo-badge-icon">⚡</span>
+                <span>Auto-Upload Demo Documents</span>
+              </button>
+            </div>
+
             <div className="simulator-upload-grid">
               {/* Slot 1: Hospital Bill */}
               <div className="upload-slot-card">
@@ -267,7 +338,7 @@ export default function Claim() {
                     <div className="slot-desc">Itemised hospital invoice or pre-admission estimate</div>
                   </div>
                 </div>
-                <FileUploadZone onFileSelect={setBillFiles} />
+                <FileUploadZone externalFiles={billFiles} onFileSelect={setBillFiles} />
               </div>
 
               {/* Slot 2: Health Insurance Policy */}
@@ -284,7 +355,7 @@ export default function Claim() {
                     <div className="slot-desc">Your policy document or cashless card (optional if already uploaded)</div>
                   </div>
                 </div>
-                <FileUploadZone onFileSelect={setPolicyFiles} />
+                <FileUploadZone externalFiles={policyFiles} onFileSelect={setPolicyFiles} />
               </div>
             </div>
 
@@ -398,6 +469,73 @@ export default function Claim() {
                   <div className="deduction-desc">{d.desc}</div>
                 </div>
               ))}
+            </div>
+
+            {/* ── SARVAM AI CONTEXT ASSISTANT BANNER ── */}
+            <div className="sarvam-chat-banner">
+              <div className="sarvam-chat-banner-left">
+                <div className="sarvam-chat-badge">
+                  <span className="dot animate-pulse" />
+                  <span>Sarvam AI Assistant • Claim &amp; Bill Context</span>
+                </div>
+                <h4>Have questions about why ₹70,000 was deducted?</h4>
+                <p>
+                  Ask our Sarvam AI assistant in English, हिंदी, or Hinglish about room rent caps, Clause 3.2 proportionate penalties, or disputing consumable bills.
+                </p>
+              </div>
+              <div className="sarvam-chat-banner-actions">
+                <button
+                  type="button"
+                  className="sarvam-pill-btn"
+                  onClick={() =>
+                    window.dispatchEvent(
+                      new CustomEvent('open-saathi-chat', {
+                        detail: { prompt: 'Why was ₹70,000 deducted from my bill?' },
+                      })
+                    )
+                  }
+                >
+                  ⚡ Why ₹70k cut?
+                </button>
+                <button
+                  type="button"
+                  className="sarvam-pill-btn"
+                  onClick={() =>
+                    window.dispatchEvent(
+                      new CustomEvent('open-saathi-chat', {
+                        detail: { prompt: 'Explain Clause 3.2 proportionate deduction' },
+                      })
+                    )
+                  }
+                >
+                  ⚡ Clause 3.2 Penalty
+                </button>
+                <button
+                  type="button"
+                  className="sarvam-pill-btn"
+                  onClick={() =>
+                    window.dispatchEvent(
+                      new CustomEvent('open-saathi-chat', {
+                        detail: { prompt: 'Can I dispute the ₹20k consumables?' },
+                      })
+                    )
+                  }
+                >
+                  ⚡ Dispute Consumables
+                </button>
+                <button
+                  type="button"
+                  className="sarvam-chat-launch-btn"
+                  onClick={() =>
+                    window.dispatchEvent(new CustomEvent('open-saathi-chat', { detail: {} }))
+                  }
+                >
+                  <span>Chat with Saathi AI</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
             </div>
 
             {/* ITEMIZED BILL BREAKDOWN MAPPED AGAINST POLICY RULES */}

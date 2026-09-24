@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 const UPLOAD_ICON = (
   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00BAF2" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -13,10 +13,17 @@ const FILE_ICON = (
   </svg>
 )
 
-export default function FileUploadZone({ onFileSelect, accept = '.pdf,.jpg,.jpeg,.png,.tiff', maxMB = 20 }) {
+export default function FileUploadZone({ onFileSelect, accept = '.pdf,.jpg,.jpeg,.png,.tiff', maxMB = 20, externalFiles }) {
   const [files, setFiles] = useState([])
   const [dragging, setDragging] = useState(false)
   const inputRef = useRef()
+
+  // Keep internal files in sync with externalFiles if provided
+  useEffect(() => {
+    if (externalFiles !== undefined) {
+      setFiles(externalFiles)
+    }
+  }, [externalFiles])
 
   const addFiles = useCallback((newFiles) => {
     const valid = Array.from(newFiles).filter(f => f.size <= maxMB * 1024 * 1024)

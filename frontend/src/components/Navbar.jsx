@@ -1,10 +1,23 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
+const SparkleIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00BAF2" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3z"/>
+  </svg>
+)
+
+const UserIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+    <circle cx="12" cy="7" r="4" />
+  </svg>
+)
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
-  const navigate  = useNavigate()
-  const location  = useLocation()
+  const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -12,43 +25,93 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const isActive = (path) => location.pathname === path
+  const currentPath = location.pathname.toLowerCase()
+  const isUpload = currentPath.includes('/upload') || currentPath.includes('/check-insurance')
+  const isClaim = currentPath.includes('/claim') || currentPath.includes('/check-claim')
+  const isBridge = currentPath.includes('/bridge')
+  const isPredict = currentPath.includes('/predict')
+  const isHome = currentPath === '/'
 
   return (
-    <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
-      <div className="nav-inner">
-        <div className="logo" onClick={() => navigate('/')}>
-          <span className="logo-claim">Claim</span>
-          <span className="logo-saathi">Saathi</span>
-          <span className="logo-by">by Paytm</span>
+    <nav className={`navbar paytm-portal-nav${scrolled ? ' scrolled' : ''}`}>
+      <div className="nav-inner" style={{ maxWidth: '1280px' }}>
+        {/* Brand Logo: Paytm ClaimSaathi */}
+        <div className="paytm-main-logo" onClick={() => navigate('/')} title="ClaimSaathi by Paytm">
+          <span className="paytm-brand-dark">pay</span>
+          <span className="paytm-brand-cyan">tm</span>
+          <span className="paytm-logo-badge">ClaimSaathi</span>
         </div>
 
-        <ul className="nav-links">
-          <li>
-            <a className={isActive('/') ? 'active' : ''} onClick={() => navigate('/')}>
-              Home
-            </a>
+        {/* Feature Navigation Links */}
+        <ul className="paytm-nav-menu">
+          <li
+            className={`paytm-nav-item${isHome ? ' active-feature' : ''}`}
+            onClick={() => navigate('/')}
+          >
+            <span>Home</span>
           </li>
-          <li>
-            <a className={isActive('/upload') || isActive('/check-insurance') ? 'active' : ''} onClick={() => navigate('/upload')}>
-              Check Insurance
-            </a>
+
+          <li
+            className={`paytm-nav-item${isUpload ? ' active-feature' : ''}`}
+            onClick={() => navigate('/upload')}
+          >
+            <span>Check Insurance</span>
           </li>
-          <li>
-            <a className={isActive('/claim') || isActive('/check-claim') ? 'active' : ''} onClick={() => navigate('/claim')}>
-              Check Claim
-            </a>
+
+          <li
+            className={`paytm-nav-item${isClaim ? ' active-feature' : ''}`}
+            onClick={() => navigate('/claim')}
+          >
+            <span>Check Claim (Bill)</span>
           </li>
-          <li>
-            <a className={isActive('/bridge') ? 'active' : ''} onClick={() => navigate('/bridge')}>
-              Bridge Gap
-            </a>
+
+          <li
+            className={`paytm-nav-item${isBridge ? ' active-feature' : ''}`}
+            onClick={() => navigate('/bridge')}
+          >
+            <span>Bridge Gap (EMI)</span>
+          </li>
+
+          <li
+            className={`paytm-nav-item${isPredict ? ' active-feature' : ''}`}
+            onClick={() => navigate('/predict')}
+          >
+            <span>Predict &amp; Plan</span>
+          </li>
+
+          <li
+            className="paytm-nav-item saathi-ai-pill"
+            onClick={() => window.dispatchEvent(new CustomEvent('open-saathi-chat', { detail: {} }))}
+            title="Chat with Sarvam AI"
+          >
+            <SparkleIcon />
+            <span>Saathi AI</span>
           </li>
         </ul>
 
-        <button className="btn btn-primary nav-cta" onClick={() => navigate('/claim')}>
-          Check Claim →
-        </button>
+        {/* Right side controls */}
+        <div className="paytm-nav-right">
+          <button
+            type="button"
+            className="paytm-cta-btn"
+            onClick={() => navigate('/claim')}
+          >
+            <span>Check Claim Split</span>
+            <span style={{ fontSize: '15px' }}>&rarr;</span>
+          </button>
+
+          <button
+            type="button"
+            className="paytm-signin-btn"
+            onClick={() => navigate('/upload')}
+            title="Account"
+          >
+            <div className="signin-avatar-circle">
+              <UserIcon />
+            </div>
+            <span>Sign In</span>
+          </button>
+        </div>
       </div>
     </nav>
   )

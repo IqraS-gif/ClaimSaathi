@@ -1,0 +1,911 @@
+import { useState, useEffect, useRef } from 'react'
+import { useLocation } from 'react-router-dom'
+import client from '../api/client'
+import './Chatbot.css'
+
+// Crisp SVG Vector Icons (No emoji dependencies)
+const SparkleIcon = ({ size = 18, color = 'currentColor' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3z"/>
+  </svg>
+)
+
+const SendIcon = ({ size = 17 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="22" y1="2" x2="11" y2="13"/>
+    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+  </svg>
+)
+
+const MicIcon = ({ size = 18 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+    <line x1="12" y1="19" x2="12" y2="22"/>
+  </svg>
+)
+
+const SpeakerIcon = ({ size = 15 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+  </svg>
+)
+
+const SpeakerMuteIcon = ({ size = 15 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+    <line x1="23" y1="9" x2="17" y2="15"/>
+    <line x1="17" y1="9" x2="23" y2="15"/>
+  </svg>
+)
+
+const CloseIcon = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"/>
+    <line x1="6" y1="6" x2="18" y2="18"/>
+  </svg>
+)
+
+const MinimizeIcon = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="5" y1="12" x2="19" y2="12"/>
+  </svg>
+)
+
+const BotIcon = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="11" width="18" height="10" rx="2"/>
+    <circle cx="12" cy="5" r="2"/>
+    <path d="M12 7v4"/>
+    <line x1="8" y1="16" x2="8" y2="16.01"/>
+    <line x1="16" y1="16" x2="16" y2="16.01"/>
+  </svg>
+)
+
+const RefreshIcon = ({ size = 13 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+  </svg>
+)
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MULTILINGUAL CONTEXT CONFIGURATION (EN | HINGLISH | HI)
+// ─────────────────────────────────────────────────────────────────────────────
+const FEATURE_DATA = {
+  claim: {
+    en: {
+      title: 'Claim & Bill Simulator Context',
+      badge: '🏥 Bill Deductions Loaded',
+      subtitle: 'Context: ₹2,00,000 Bill • ₹70,000 Deductions (Clauses 3.1, 3.2, 7.2, 5.1)',
+      initialGreeting: "Namaste! I'm your ClaimSaathi Assistant powered by **Sarvam AI**.\n\nI have loaded your **₹2,00,000 Fortis hospital bill simulation**.\n• Estimated Insurer Payout: **₹1,30,000** (65%)\n• Out-of-Pocket Deduction: **₹70,000** (35%)\n\nAsk me why any specific item was cut, how to dispute consumables, or speak using the mic!",
+      quickPrompts: [
+        'Why was ₹70,000 deducted from my bill?',
+        'Explain Clause 3.2 proportionate deduction',
+        'Can I dispute the ₹20k consumables?',
+        'How to bridge ₹70k with Paytm 0% EMI?',
+      ],
+      placeholder: 'Ask Sarvam AI about this claim bill or speak with mic...',
+    },
+    hi: {
+      title: 'क्लेम व बिल सिमुलेटर संदर्भ',
+      badge: '🏥 बिल कटौतियां लोड हैं',
+      subtitle: 'संदर्भ: ₹2,00,000 बिल • ₹70,000 कटौतियां (क्लॉज 3.1, 3.2, 7.2)',
+      initialGreeting: "नमस्ते! मैं सरवम AI द्वारा संचालित आपका **क्लेम साथी सहायक** हूँ।\n\nमैंने आपके **₹2,00,000 अस्पताल बिल** का सिमुलेशन लोड कर लिया है:\n• बीमा कंपनी द्वारा देय: **₹1,30,000** (65%)\n• मरीज को देय (कटौती): **₹70,000** (35%)\n\nमुझसे पूछें कि बिल में से पैसे क्यों कटे, कंज्यूमबल्स पर क्लेम कैसे करें, या माइक दबाकर बोलें!",
+      quickPrompts: [
+        'मेरे बिल से ₹70,000 क्यों काटे गए?',
+        'क्लॉज 3.2 समानुपातिक कटौती समझाएं',
+        'क्या ₹20,000 कंज्यूमबल्स पर अपील कर सकते हैं?',
+        'Paytm 0% EMI से ₹70,000 कैसे भरें?',
+      ],
+      placeholder: 'सरवम AI से अपने क्लेम या बिल के बारे में पूछें या बोलें...',
+    },
+    hinglish: {
+      title: 'Claim & Bill Simulator Context',
+      badge: '🏥 Bill Deductions Loaded',
+      subtitle: 'Context: ₹2 Lakh Bill • ₹70k Deductions',
+      initialGreeting: "Namaste! Main Sarvam AI powered aapka **ClaimSaathi assistant** hoon.\n\nAapka **₹2,00,000 Fortis hospital bill** breakdown ready hai:\n• Insurer Payout: **₹1,30,000** (65%)\n• You Pay (Deduction): **₹70,000** (35%)\n\nKoi bhi doubt ho jaise ₹70k kyu deduct hua ya consumables appeal kaise karein, neeche puchein ya mic dabakar bolein!",
+      quickPrompts: [
+        '₹70,000 kyu deduct hue mere bill se?',
+        'Clause 3.2 proportionate penalty samjhao',
+        'Kya 20k consumables claim ho sakte hain?',
+        'Paytm 0% EMI se bill kaise bharein?',
+      ],
+      placeholder: 'Ask in Hinglish or speak with mic...',
+    },
+  },
+  insurance: {
+    en: {
+      title: 'Insurance Policy Context',
+      badge: '🛡️ Policy Limits Loaded',
+      subtitle: 'Context: ₹5,00,000 Cover • ₹3k Room Cap • Exclusions & Network',
+      initialGreeting: "Namaste! I'm your ClaimSaathi Assistant powered by **Sarvam AI**.\n\nI have the complete breakdown of your **Health Insurance Policy**:\n• Sum Insured: **₹5,00,000**\n• Room Rent Cap: **₹3,000/day** (Twin Sharing)\n• Co-Pay: **10%**\n• Empanelled: Fortis, Max, Apollo\n\nAsk me about treatment coverage, cashless admission, or room upgrade penalties!",
+      quickPrompts: [
+        'Is single deluxe room covered in my policy?',
+        'What are the major exclusions in my policy?',
+        'Is Fortis Hospital cashless under my policy?',
+        'Explain the 10% co-payment rule',
+      ],
+      placeholder: 'Ask Sarvam AI about this policy or speak with mic...',
+    },
+    hi: {
+      title: 'स्वास्थ्य बीमा पॉलिसी संदर्भ',
+      badge: '🛡️ पॉलिसी शर्तें लोड हैं',
+      subtitle: 'संदर्भ: ₹5,00,000 कवर • ₹3,000 रूम सीमा • अपवाद व अस्पताल',
+      initialGreeting: "नमस्ते! मैं सरवम AI द्वारा संचालित आपका **क्लेम साथी सहायक** हूँ।\n\nआपकी स्वास्थ्य बीमा पॉलिसी का विवरण लोड है:\n• सम इंश्योर्ड (बीमा राशि): **₹5,00,000**\n• रूम रेंट सीमा: **₹3,000/दिन** (ट्विन शेयरिंग)\n• को-पेमेंट: **10%**\n• कैशलेस अस्पताल: फोर्टिस, मैक्स, अपोलो\n\nउपचार कवरेज, कमरे के किराए के नियम या कैशलेस भर्ती के बारे में हिंदी में पूछें!",
+      quickPrompts: [
+        'क्या सिंगल डीलक्स रूम मेरी पॉलिसी में कवर है?',
+        'मेरी पॉलिसी में क्या-क्या चीजें कवर नहीं हैं?',
+        'क्या फोर्टिस अस्पताल में कैशलेस इलाज मिलेगा?',
+        '10% को-पेमेंट नियम क्या है?',
+      ],
+      placeholder: 'सरवम AI से अपनी पॉलिसी के बारे में हिंदी में पूछें...',
+    },
+    hinglish: {
+      title: 'Insurance Policy Context',
+      badge: '🛡️ Policy Limits Loaded',
+      subtitle: 'Context: ₹5 Lakh Cover • ₹3k Room Cap',
+      initialGreeting: "Namaste! Main Sarvam AI powered aapka **ClaimSaathi assistant** hoon.\n\nAapki policy ka data loaded hai:\n• Sum Insured: **₹5,00,000**\n• Room Rent Limit: **₹3,000/day**\n• Co-Pay: **10%**\n• Cashless Hospitals: Fortis, Max, Apollo\n\nKoi bhi sawal puchein jaise room upgrade rules ya surgery coverage!",
+      quickPrompts: [
+        'Kya single deluxe room covered hai?',
+        'Policy me major exclusions kya hain?',
+        'Kya Fortis hospital cashless hai?',
+        '10% co-payment rule explain karo',
+      ],
+      placeholder: 'Ask in Hinglish or speak with mic...',
+    },
+  },
+  bridge: {
+    en: {
+      title: 'Financial Bridge Context',
+      badge: '💳 Paytm EMI & Loans Loaded',
+      subtitle: 'Context: ₹70,000 Cash Gap • 0% EMI • 45-day TPA Grace',
+      initialGreeting: "Namaste! I'm your ClaimSaathi Assistant powered by **Sarvam AI**.\n\nI'm ready with your **Paytm Financial Bridge** details to cover the **₹70,000** hospital deduction:\n• **0% No-Cost EMI:** ₹23,333/month (3 mos)\n• **45-Day Advance:** ₹0 today; repay after TPA reimbursement\n• Direct disbursal to Fortis billing counter in < 2 mins\n\nHow can I help you discharge with peace of mind?",
+      quickPrompts: [
+        'How does the 0% No-Cost EMI work for hospital bills?',
+        'How does 45-day TPA reimbursement bridge work?',
+        'What documents are needed for approval?',
+        'Can Paytm pay the hospital cashier directly?',
+      ],
+      placeholder: 'Ask about Paytm 0% EMI or medical credit...',
+    },
+    hi: {
+      title: 'Paytm फाइनेंशियल ब्रिज संदर्भ',
+      badge: '💳 Paytm मेडिकल लोन लोड है',
+      subtitle: 'संदर्भ: ₹70,000 कैश गैप • 0% ईएमआई • 45 दिन ग्रेस',
+      initialGreeting: "नमस्ते! मैं सरवम AI द्वारा संचालित आपका **क्लेम साथी सहायक** हूँ।\n\nअस्पताल के **₹70,000** के अंतर को भरने के लिए Paytm मेडिकल लोन उपलब्ध है:\n• **0% नो-कॉस्ट EMI:** ₹23,333/माह (3 महीने)\n• **45-दिन ग्रेस एडवांस:** आज ₹0 दें; TPA क्लेम मिलने पर चुकाएं\n• 2 मिनट में सीधे अस्पताल के कैशियर काउंटर पर भुगतान\n\nलोन पात्रता या डिस्चार्ज प्रक्रिया के बारे में कुछ भी पूछें!",
+      quickPrompts: [
+        '0% नो-कॉस्ट EMI कैसे काम करती है?',
+        '45 दिन की TPA ग्रेस छूट कैसे मिलती है?',
+        'लोन के लिए कौन से दस्तावेज चाहिए?',
+        'क्या Paytm सीधे अस्पताल को पैसे देता है?',
+      ],
+      placeholder: 'Paytm 0% ईएमआई या लोन के बारे में हिंदी में पूछें...',
+    },
+    hinglish: {
+      title: 'Financial Bridge Context',
+      badge: '💳 Paytm EMI & Loans Loaded',
+      subtitle: 'Context: ₹70k Cash Gap • 0% EMI',
+      initialGreeting: "Namaste! Main Sarvam AI powered aapka **ClaimSaathi assistant** hoon.\n\nHospital gap ka **₹70,000** clear karne ke liye Paytm Health Bridge available hai:\n• **0% No-Cost EMI:** ₹23,333/month (3 months)\n• **45-Day Advance:** Aaj ₹0 pay karein, TPA se paisa aane par repay karein\n• Instant hospital disbursal in 2 mins\n\nKaise help kar sakta hoon aapki?",
+      quickPrompts: [
+        '0% No-Cost EMI kaise kaam karti hai?',
+        '45-day TPA grace advance kaise milega?',
+        'Loan ke liye kaunse documents chahiye?',
+        'Kya Paytm hospital ko direct pay karega?',
+      ],
+      placeholder: 'Ask in Hinglish or speak with mic...',
+    },
+  },
+  general: {
+    en: {
+      title: 'ClaimSaathi AI Assistant',
+      badge: '⚡ Sarvam AI 105B',
+      subtitle: 'Expert Health Insurance & Hospital Bill Advisor',
+      initialGreeting: "Namaste! I'm your ClaimSaathi Assistant powered by **Sarvam AI**.\n\nI can help you:\n1. Decode your health insurance policy & hidden clauses\n2. Simulate hospital bill out-of-pocket deductions\n3. Access instant zero-collateral Paytm EMI to bridge any cash gap\n\nWhat would you like to know today?",
+      quickPrompts: [
+        'What is proportionate room rent deduction?',
+        'How does ClaimSaathi simulate hospital bills?',
+        'Explain 0% No-Cost EMI for hospital bills',
+        'What are non-payable consumables in claims?',
+      ],
+      placeholder: 'Ask Sarvam AI anything or speak with mic...',
+    },
+    hi: {
+      title: 'क्लेम साथी AI सहायक',
+      badge: '⚡ सरवम AI 105B',
+      subtitle: 'स्वास्थ्य बीमा व अस्पताल बिल विशेषज्ञ',
+      initialGreeting: "नमस्ते! मैं सरवम AI द्वारा संचालित आपका **क्लेम साथी सहायक** हूँ।\n\nमैं आपकी सहायता कर सकता हूँ:\n1. स्वास्थ्य बीमा पॉलिसी और छुपे हुए क्लॉज समझने में\n2. अस्पताल बिल में होने वाली कटौतियों का सिमुलेशन देखने में\n3. अस्पताल में बिना ब्याज 0% No-Cost EMI से तुरंत भुगतान करने में\n\nआप मुझसे हिंदी में कुछ भी पूछ सकते हैं!",
+      quickPrompts: [
+        'समानुपातिक रूम रेंट कटौती क्या होती है?',
+        'ClaimSaathi अस्पताल बिल सिमुलेट कैसे करता है?',
+        'अस्पताल बिल के लिए 0% EMI कैसे मिलती है?',
+        'क्लेम में नॉन-पेयेबल कंज्यूमबल्स क्या होते हैं?',
+      ],
+      placeholder: 'सरवम AI से हिंदी में पूछें या माइक से बोलें...',
+    },
+    hinglish: {
+      title: 'ClaimSaathi AI Assistant',
+      badge: '⚡ Sarvam AI 105B',
+      subtitle: 'Health Insurance & Bill Expert',
+      initialGreeting: "Namaste! Main Sarvam AI powered aapka **ClaimSaathi assistant** hoon.\n\nMain aapki help kar sakta hoon:\n1. Health policy ke clauses aur room rent rules samajhne me\n2. Hospital bill me kitna cut hoga simulate karne me\n3. Paytm 0% No-Cost EMI se instant hospital payment karne me\n\nAap kya jaanna chahte hain?",
+      quickPrompts: [
+        'Proportionate room rent deduction kya hota hai?',
+        'ClaimSaathi hospital bill kaise simulate karta hai?',
+        '0% No-Cost EMI hospital bills ke liye kaise milti hai?',
+        'Non-payable consumables kya hote hain?',
+      ],
+      placeholder: 'Ask in Hinglish or speak with mic...',
+    },
+  },
+}
+
+function getLocalizedConfig(feature, lang) {
+  const f = FEATURE_DATA[feature] || FEATURE_DATA.general
+  return f[lang] || f.en
+}
+
+export default function Chatbot({ customFeature, customContext }) {
+  const location = useLocation()
+  const [isOpen, setIsOpen] = useState(false)
+  const [isMinimized, setIsMinimized] = useState(false)
+  const [messages, setMessages] = useState([])
+  const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [lang, setLang] = useState('en') // 'en' | 'hinglish' | 'hi'
+
+  // Voice State
+  const [isListening, setIsListening] = useState(false)
+  const [speakingMessageId, setSpeakingMessageId] = useState(null)
+  const [autoSpeak, setAutoSpeak] = useState(false)
+  const [speechError, setSpeechError] = useState(null)
+
+  const messagesEndRef = useRef(null)
+  const recognitionRef = useRef(null)
+
+  // Determine current feature context from route or prop
+  const currentPath = location.pathname.toLowerCase()
+  let detectedFeature = 'general'
+  if (customFeature) {
+    detectedFeature = customFeature
+  } else if (currentPath.includes('/claim') || currentPath.includes('/check-claim')) {
+    detectedFeature = 'claim'
+  } else if (currentPath.includes('/upload') || currentPath.includes('/check-insurance')) {
+    detectedFeature = 'insurance'
+  } else if (currentPath.includes('/bridge')) {
+    detectedFeature = 'bridge'
+  }
+
+  const localized = getLocalizedConfig(detectedFeature, lang)
+
+  // Initialize or reset greeting when feature or language changes
+  useEffect(() => {
+    setMessages([
+      {
+        id: `init-${detectedFeature}-${lang}`,
+        role: 'assistant',
+        content: localized.initialGreeting,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        provider: 'sarvam-ai',
+      },
+    ])
+  }, [detectedFeature, lang])
+
+  // Auto-scroll to bottom of messages
+  useEffect(() => {
+    if (isOpen && !isMinimized) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [messages, isOpen, isMinimized, loading])
+
+  // Listen for global open events from any page
+  useEffect(() => {
+    const handleGlobalOpen = (e) => {
+      setIsOpen(true)
+      setIsMinimized(false)
+      if (e.detail?.prompt) {
+        setTimeout(() => {
+          handleSend(e.detail.prompt)
+        }, 120)
+      }
+    }
+    window.addEventListener('open-saathi-chat', handleGlobalOpen)
+    return () => window.removeEventListener('open-saathi-chat', handleGlobalOpen)
+  }, [detectedFeature, lang, messages])
+
+  // Stop speech synthesis when closing or unmounting
+  useEffect(() => {
+    return () => {
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel()
+      }
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.abort()
+        } catch {}
+      }
+    }
+  }, [])
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // TEXT-TO-SPEECH (VOICE OUTPUT)
+  // ─────────────────────────────────────────────────────────────────────────────
+  const stopSpeaking = () => {
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel()
+    }
+    setSpeakingMessageId(null)
+  }
+
+  const speakText = (text, messageId) => {
+    if (!('speechSynthesis' in window)) {
+      alert('Speech synthesis is not supported in this browser.')
+      return
+    }
+
+    if (speakingMessageId === messageId) {
+      stopSpeaking()
+      return
+    }
+
+    stopSpeaking()
+
+    // Clean text: strip markdown characters for natural voice reading
+    let cleanSpeech = text
+      .replace(/[*_#`]/g, '')
+      .replace(/[•\-]\s*/g, '. ')
+      .replace(/\s+/g, ' ')
+      .trim()
+
+    if (lang === 'hi') {
+      cleanSpeech = cleanSpeech.replace(/₹\s*([0-9,]+)/g, '$1 रुपये').replace(/₹/g, 'रुपये ')
+    } else {
+      cleanSpeech = cleanSpeech.replace(/₹\s*([0-9,]+)/g, '$1 rupees').replace(/₹/g, 'rupees ')
+    }
+
+    const utterance = new SpeechSynthesisUtterance(cleanSpeech)
+
+    // Voice & Language selection
+    const voices = window.speechSynthesis.getVoices() || []
+    if (lang === 'hi') {
+      utterance.lang = 'hi-IN'
+      const hiVoice = voices.find((v) => v.lang && v.lang.startsWith('hi'))
+      if (hiVoice) utterance.voice = hiVoice
+    } else {
+      utterance.lang = 'en-IN'
+      const inVoice = voices.find(
+        (v) => (v.lang && v.lang.includes('IN')) || (v.name && v.name.toLowerCase().includes('india'))
+      )
+      if (inVoice) utterance.voice = inVoice
+    }
+
+    utterance.rate = 1.0
+    utterance.pitch = 1.0
+
+    utterance.onstart = () => {
+      setSpeakingMessageId(messageId)
+    }
+
+    utterance.onend = () => {
+      setSpeakingMessageId(null)
+    }
+
+    utterance.onerror = () => {
+      setSpeakingMessageId(null)
+    }
+
+    window.speechSynthesis.speak(utterance)
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // SPEECH-TO-TEXT (VOICE INPUT)
+  // ─────────────────────────────────────────────────────────────────────────────
+  const toggleListening = () => {
+    setSpeechError(null)
+
+    if (isListening) {
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.stop()
+        } catch {}
+      }
+      setIsListening(false)
+      return
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+    if (!SpeechRecognition) {
+      setSpeechError('Speech recognition is not supported in this browser. Please use Chrome or Edge.')
+      setTimeout(() => setSpeechError(null), 4000)
+      return
+    }
+
+    try {
+      const recognition = new SpeechRecognition()
+      recognitionRef.current = recognition
+      recognition.continuous = false
+      recognition.interimResults = false
+      recognition.maxAlternatives = 1
+
+      // Set recognition language based on current toggle
+      if (lang === 'hi') {
+        recognition.lang = 'hi-IN'
+      } else {
+        recognition.lang = 'en-IN'
+      }
+
+      recognition.onstart = () => {
+        setIsListening(true)
+        setSpeechError(null)
+      }
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript
+        if (transcript && transcript.trim()) {
+          setInput(transcript)
+          setIsListening(false)
+          handleSend(transcript)
+        }
+      }
+
+      recognition.onerror = (e) => {
+        console.warn('[SpeechRecognition Error]', e.error)
+        setIsListening(false)
+        if (e.error === 'not-allowed') {
+          setSpeechError('Microphone permission blocked. Please allow mic access in your browser.')
+        } else if (e.error !== 'no-speech') {
+          setSpeechError(`Voice error: ${e.error}`)
+        }
+        setTimeout(() => setSpeechError(null), 4500)
+      }
+
+      recognition.onend = () => {
+        setIsListening(false)
+      }
+
+      recognition.start()
+    } catch (err) {
+      console.error('[SpeechRecognition Init Error]', err)
+      setIsListening(false)
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // MESSAGE SENDING & SARVAM AI BACKEND CALL
+  // ─────────────────────────────────────────────────────────────────────────────
+  const handleSend = async (textToSend) => {
+    const query = (textToSend || input).trim()
+    if (!query || loading) return
+
+    const newMsg = {
+      id: `u-${Date.now()}`,
+      role: 'user',
+      content: query,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    }
+
+    setMessages((prev) => [...prev, newMsg])
+    setInput('')
+    setLoading(true)
+
+    try {
+      const historyPayload = messages.slice(-6).map((m) => ({
+        role: m.role,
+        content: m.content,
+      }))
+
+      const res = await client.post('/chat/', {
+        message: query,
+        feature: detectedFeature,
+        language: lang, // 'en' | 'hi' | 'hinglish'
+        context_data: customContext || {
+          total_billed: 200000,
+          insurance_payable: 130000,
+          you_pay: 70000,
+          gap_amount: 70000,
+          hospital_name: 'Fortis Memorial Research Institute',
+          patient_name: 'Rahul Verma',
+          sum_insured: '₹5,00,000',
+          room_rent_limit: '₹3,000/day',
+        },
+        history: historyPayload,
+      })
+
+      const botReplyId = `b-${Date.now()}`
+      const botReply = {
+        id: botReplyId,
+        role: 'assistant',
+        content: res.data.reply,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        provider: res.data.provider,
+        model: res.data.model,
+      }
+      setMessages((prev) => [...prev, botReply])
+
+      // Auto-speak reply if auto-speak toggle is ON
+      if (autoSpeak) {
+        speakText(res.data.reply, botReplyId)
+      }
+    } catch (err) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `err-${Date.now()}`,
+          role: 'assistant',
+          content:
+            lang === 'hi'
+              ? 'क्षमा करें, बीमा इंजन से जुड़ने में समस्या हुई। कृपया दोबारा प्रयास करें या नीचे दिए गए किसी प्रश्न पर क्लिक करें।'
+              : 'I apologize, but I could not connect to the insurance engine right now. Please try again or click any suggested question below.',
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          isError: true,
+        },
+      ])
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      handleSend()
+    }
+  }
+
+  const resetChat = () => {
+    stopSpeaking()
+    setMessages([
+      {
+        id: `init-${Date.now()}`,
+        role: 'assistant',
+        content: localized.initialGreeting,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        provider: 'sarvam-ai',
+      },
+    ])
+  }
+
+  // Format markdown: bold, list items, paragraphs
+  const renderMessageContent = (text) => {
+    if (!text) return ''
+    const lines = text.split('\n')
+    return lines.map((line, idx) => {
+      const trimmed = line.trim()
+      const isBullet = trimmed.startsWith('•') || trimmed.startsWith('- ')
+      const cleaned = isBullet ? trimmed.replace(/^[•\-]\s*/, '') : trimmed
+
+      // Split bold chunks
+      const parts = cleaned.split(/(\*\*.*?\*\*)/g)
+      const parsedParts = parts.map((part, pIdx) => {
+        if (part.startsWith('**') && part.endsWith('**')) {
+          return (
+            <strong key={pIdx} className="saathi-bubble-strong">
+              {part.slice(2, -2)}
+            </strong>
+          )
+        }
+        return part
+      })
+
+      if (isBullet) {
+        return (
+          <div key={idx} className="saathi-bubble-bullet">
+            <span className="saathi-bullet-dot">•</span>
+            <span>{parsedParts}</span>
+          </div>
+        )
+      }
+
+      if (trimmed === '') {
+        return <div key={idx} style={{ height: '6px' }} />
+      }
+
+      return (
+        <div key={idx} className="saathi-bubble-p">
+          {parsedParts}
+        </div>
+      )
+    })
+  }
+
+  return (
+    <>
+      {/* ── EXPANDED CHAT WINDOW ── */}
+      {isOpen && (
+        <div className={`saathi-chat-window${isMinimized ? ' minimized' : ''}`}>
+          {/* Header */}
+          <div className="saathi-header">
+            <div className="saathi-header-info">
+              <div className="saathi-bot-avatar">
+                <BotIcon size={22} />
+                <span className="saathi-avatar-dot" />
+              </div>
+              <div className="saathi-header-meta">
+                <div className="saathi-header-title-row">
+                  <span className="saathi-header-name">ClaimSaathi AI</span>
+                  <span className="saathi-header-powered">Sarvam AI</span>
+                </div>
+                <div className="saathi-header-context-tag">
+                  <span>●</span>
+                  <span>{localized.badge}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Header controls: Voice Toggle + Language + Minimize + Close */}
+            <div className="saathi-header-controls">
+              {/* Voice Output Auto-Play Toggle */}
+              <button
+                type="button"
+                onClick={() => {
+                  if (autoSpeak) stopSpeaking()
+                  setAutoSpeak(!autoSpeak)
+                }}
+                className={`saathi-audio-toggle-btn${autoSpeak ? ' active' : ''}`}
+                title={autoSpeak ? 'Voice Output: ON (Click to mute)' : 'Voice Output: OFF (Click to auto-read)'}
+              >
+                {autoSpeak ? <SpeakerIcon size={14} /> : <SpeakerMuteIcon size={14} />}
+                <span>{autoSpeak ? (lang === 'hi' ? 'आवाज़ ON' : 'Audio ON') : (lang === 'hi' ? 'आवाज़' : 'Audio')}</span>
+              </button>
+
+              {/* Language Switcher */}
+              <div className="saathi-lang-switcher">
+                <button
+                  type="button"
+                  onClick={() => {
+                    stopSpeaking()
+                    setLang('en')
+                  }}
+                  className={`saathi-lang-btn${lang === 'en' ? ' active' : ''}`}
+                  title="English"
+                >
+                  EN
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    stopSpeaking()
+                    setLang('hinglish')
+                  }}
+                  className={`saathi-lang-btn${lang === 'hinglish' ? ' active' : ''}`}
+                  title="Hinglish"
+                >
+                  Hin
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    stopSpeaking()
+                    setLang('hi')
+                  }}
+                  className={`saathi-lang-btn${lang === 'hi' ? ' active' : ''}`}
+                  title="हिंदी में बात करें"
+                >
+                  हिंदी
+                </button>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setIsMinimized(!isMinimized)}
+                className="saathi-icon-btn"
+                title={isMinimized ? 'Expand' : 'Minimize'}
+              >
+                <MinimizeIcon size={16} />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  stopSpeaking()
+                  setIsOpen(false)
+                }}
+                className="saathi-icon-btn close"
+                title="Close chat"
+              >
+                <CloseIcon size={16} />
+              </button>
+            </div>
+          </div>
+
+          {!isMinimized && (
+            <>
+              {/* Context Summary Strip */}
+              <div className="saathi-context-strip">
+                <div className="saathi-context-strip-left">
+                  <SparkleIcon size={13} color="#00BAF2" />
+                  <span>{localized.subtitle}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={resetChat}
+                  className="saathi-context-strip-reset"
+                  title="Reset conversation"
+                >
+                  <RefreshIcon size={11} />
+                  <span>{lang === 'hi' ? 'रीसेट' : 'Reset'}</span>
+                </button>
+              </div>
+
+              {/* Message History Area */}
+              <div className="saathi-messages-box">
+                {messages.map((m) => (
+                  <div key={m.id} className={`saathi-message-row ${m.role}`}>
+                    <div className="saathi-bubble">
+                      {renderMessageContent(m.content)}
+                    </div>
+                    <div className="saathi-message-meta">
+                      <span>{m.time}</span>
+                      {m.role === 'assistant' && (
+                        <>
+                          <span className="saathi-sarvam-source">⚡ Sarvam AI</span>
+                          {/* Voice Read Aloud Button on Bot Message */}
+                          <button
+                            type="button"
+                            onClick={() => speakText(m.content, m.id)}
+                            className={`saathi-speaker-btn${speakingMessageId === m.id ? ' speaking' : ''}`}
+                            title={speakingMessageId === m.id ? 'Stop Speaking' : 'Read Aloud'}
+                          >
+                            <SpeakerIcon size={13} />
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                ))}
+
+                {loading && (
+                  <div className="saathi-typing">
+                    <div className="saathi-typing-dots">
+                      <span className="saathi-dot" />
+                      <span className="saathi-dot" />
+                      <span className="saathi-dot" />
+                    </div>
+                    <span className="saathi-typing-text">
+                      {lang === 'hi' ? 'सरवम AI सोच रहा है...' : 'Sarvam AI thinking...'}
+                    </span>
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
+
+              {/* Quick Context Prompts */}
+              <div className="saathi-quick-prompts-bar">
+                {localized.quickPrompts.map((q, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => handleSend(q)}
+                    className="saathi-chip-btn"
+                  >
+                    <span style={{ color: '#00BAF2' }}>⚡</span>
+                    <span>{q}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* Input Area with Microphone Voice Input */}
+              <div className="saathi-input-bar">
+                {/* Active Listening Animated Bar */}
+                {isListening && (
+                  <div className="saathi-voice-listening-bar">
+                    <div className="saathi-voice-listening-left">
+                      <div className="saathi-voice-wave">
+                        <span className="saathi-wave-bar" />
+                        <span className="saathi-wave-bar" />
+                        <span className="saathi-wave-bar" />
+                        <span className="saathi-wave-bar" />
+                      </div>
+                      <span>
+                        {lang === 'hi'
+                          ? 'सुन रहे हैं... कृपया हिंदी में बोलें'
+                          : 'Listening... Speak now'}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={toggleListening}
+                      className="saathi-voice-cancel-btn"
+                    >
+                      {lang === 'hi' ? 'रद्द करें' : 'Cancel'}
+                    </button>
+                  </div>
+                )}
+
+                {/* Speech Error Banner if any */}
+                {speechError && (
+                  <div
+                    style={{
+                      background: '#FEF2F2',
+                      color: '#DC2626',
+                      border: '1px solid #FECDD3',
+                      fontSize: '11px',
+                      padding: '5px 10px',
+                      borderRadius: '8px',
+                      marginBottom: '6px',
+                    }}
+                  >
+                    {speechError}
+                  </div>
+                )}
+
+                <div className="saathi-input-box">
+                  <input
+                    type="text"
+                    placeholder={
+                      isListening
+                        ? lang === 'hi' ? 'आपकी आवाज़ सुन रहे हैं...' : 'Listening to your voice...'
+                        : localized.placeholder
+                    }
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    className="saathi-input-field"
+                  />
+
+                  {/* Voice Microphone Input Button */}
+                  <button
+                    type="button"
+                    onClick={toggleListening}
+                    className={`saathi-mic-btn${isListening ? ' listening' : ''}`}
+                    title={
+                      isListening
+                        ? 'Stop Listening'
+                        : lang === 'hi'
+                        ? 'माइक से हिंदी में बोलें'
+                        : 'Click to Speak (Voice Input)'
+                    }
+                  >
+                    <MicIcon size={17} />
+                  </button>
+
+                  {/* Send Button */}
+                  <button
+                    type="button"
+                    onClick={() => handleSend()}
+                    disabled={!input.trim() || loading}
+                    className="saathi-send-btn"
+                    title={lang === 'hi' ? 'संदेश भेजें' : 'Send message'}
+                  >
+                    <SendIcon size={16} />
+                  </button>
+                </div>
+
+                <div className="saathi-input-subtext">
+                  <span>Powered by Sarvam AI (sarvam-105b) • Voice &amp; Hindi Enabled</span>
+                  <span className="saathi-confidential-tag">100% Confidential</span>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      )}
+
+      {/* ── FLOATING LAUNCHER BUTTON ── */}
+      {!isOpen && (
+        <button
+          type="button"
+          onClick={() => {
+            setIsOpen(true)
+            setIsMinimized(false)
+          }}
+          className="saathi-chat-launcher"
+        >
+          <span className="saathi-launcher-pulse" />
+          <div className="saathi-launcher-icon">
+            <SparkleIcon size={19} color="#FFFFFF" />
+          </div>
+          <div className="saathi-launcher-texts">
+            <div className="saathi-launcher-title">
+              <span>Ask Saathi AI</span>
+              <span className="saathi-launcher-sarvam-tag">Voice &amp; AI</span>
+            </div>
+            <div className="saathi-launcher-subtitle">
+              {localized.badge}
+            </div>
+          </div>
+        </button>
+      )}
+    </>
+  )
+}

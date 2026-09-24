@@ -6,6 +6,7 @@ import Upload   from './pages/Upload'
 import Predict  from './pages/Predict'
 import Claim    from './pages/Claim'
 import Bridge   from './pages/Bridge'
+import Chatbot  from './components/Chatbot'
 
 export default function App() {
   return (
@@ -21,6 +22,8 @@ export default function App() {
         <Route path="/bridge"           element={<Bridge />} />
       </Routes>
       <Footer />
+      {/* Dynamic Context-Aware Sarvam AI Chatbot */}
+      <Chatbot />
     </BrowserRouter>
   )
 }
