@@ -1,0 +1,13 @@
+# Environment and keys
+.env
+.env.*
+*.env
+!.env.example
+
+# Python
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.log

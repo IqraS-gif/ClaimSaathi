@@ -1,0 +1,40 @@
+# Environment files and API keys (CRITICAL - DO NOT COMMIT)
+.env
+.env.*
+*.env
+!.env.example
+backend/.env
+backend/venv/.env
+
+# Python Virtual Environments
+venv/
+env/
+ENV/
+backend/venv/
+backend/env/
+
+# Python Cache & Bytecode
+__pycache__/
+*/__pycache__/
+*/*/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node & Frontend dependencies & build artifacts
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+build/
+.npm/
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
