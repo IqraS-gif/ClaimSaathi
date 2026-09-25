@@ -125,10 +125,9 @@ export default function Landing() {
           </div>
 
           {/* RIGHT: Visual */}
-          <div style={{ position: 'relative', width: '100%' }}>
-            {/* Soft backdrop card */}
+          <div style={{ position: 'relative', width: '100%', paddingLeft: '56px' }}>
+            {/* Photo backdrop card */}
             <div style={{
-              background: 'linear-gradient(140deg, #EEF6FD 0%, #E2F0FB 100%)',
               borderRadius: '32px',
               padding: '40px 24px',
               position: 'relative',
@@ -136,33 +135,47 @@ export default function Landing() {
               justifyContent: 'center',
               alignItems: 'center',
               minHeight: '520px',
+              overflow: 'hidden',
+              backgroundImage: 'url(https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=900&q=60)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
             }}>
-
-              {/* Left floating badges */}
+              {/* Photo tint + blur overlay */}
               <div style={{
-                position: 'absolute', top: '200px', left: '-8px',
+                position: 'absolute', inset: 0,
+                backdropFilter: 'blur(18px)',
+                background: 'linear-gradient(140deg, rgba(220,238,255,0.82) 0%, rgba(200,228,252,0.88) 100%)',
+                borderRadius: '32px',
+                zIndex: 0,
+              }} />
+
+              {/* Left floating badges — overhang the card edge */}
+              <div style={{
+                position: 'absolute', top: '195px', left: '-52px',
                 background: '#fff', border: '1px solid #E2E8F0',
-                borderRadius: '9999px', padding: '8px 16px 8px 8px',
-                display: 'flex', alignItems: 'center', gap: '8px',
-                boxShadow: '0 8px 24px -4px rgba(0,41,112,0.14)',
-                fontSize: '12px', fontWeight: 700, color: '#0F172A', zIndex: 5,
+                borderRadius: '9999px', padding: '9px 18px 9px 8px',
+                display: 'flex', alignItems: 'center', gap: '9px',
+                boxShadow: '0 10px 28px -4px rgba(0,41,112,0.18)',
+                fontSize: '13px', fontWeight: 700, color: '#0F172A', zIndex: 6,
+                whiteSpace: 'nowrap',
               }}>
-                <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#E0F4FE', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="#00BAF2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
+                <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: '#00BAF2', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
                 </div>
                 Faster Claims
               </div>
 
               <div style={{
-                position: 'absolute', top: '300px', left: '-8px',
+                position: 'absolute', top: '295px', left: '-52px',
                 background: '#fff', border: '1px solid #E2E8F0',
-                borderRadius: '9999px', padding: '8px 16px 8px 8px',
-                display: 'flex', alignItems: 'center', gap: '8px',
-                boxShadow: '0 8px 24px -4px rgba(0,41,112,0.14)',
-                fontSize: '12px', fontWeight: 700, color: '#0F172A', zIndex: 5,
+                borderRadius: '9999px', padding: '9px 18px 9px 8px',
+                display: 'flex', alignItems: 'center', gap: '9px',
+                boxShadow: '0 10px 28px -4px rgba(0,41,112,0.18)',
+                fontSize: '13px', fontWeight: 700, color: '#0F172A', zIndex: 6,
+                whiteSpace: 'nowrap',
               }}>
-                <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#E0F4FE', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00BAF2" strokeWidth="2.3">
+                <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: '#E0F4FE', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00BAF2" strokeWidth="2.3">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" />
                   </svg>
                 </div>
@@ -196,8 +209,12 @@ export default function Landing() {
                 <div style={{ padding: '8px 14px 14px', display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between' }}>
                   {/* App Header */}
                   <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: '15px', fontWeight: 900, marginBottom: '2px' }}>
-                      <span style={{ color: '#002970' }}>pay</span><span style={{ color: '#00BAF2' }}>tm</span>
+                    <div style={{ fontSize: '14px', fontWeight: 900, marginBottom: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
+                      <span><span style={{ color: '#002970' }}>pay</span><span style={{ color: '#00BAF2' }}>tm</span></span>
+                      <svg width="13" height="11" viewBox="0 0 14 12" fill="none">
+                        <path d="M7 11s-6-3.5-6-7a4 4 0 0 1 6-3.46A4 4 0 0 1 13 4c0 3.5-6 7-6 7z" fill="#E11D48"/>
+                      </svg>
+                      <span style={{ fontSize: '9px', fontWeight: 800, color: '#002970', letterSpacing: '0.2px' }}>UPI</span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', marginBottom: '2px' }}>
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="#00BAF2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
