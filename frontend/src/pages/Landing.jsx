@@ -126,7 +126,107 @@ export default function Landing() {
 
           {/* RIGHT: Visual */}
           <div style={{ position: 'relative', width: '100%', paddingLeft: '56px' }}>
-            {/* Photo backdrop card */}
+
+            {/* Left floating badges — on outer wrapper, NOT inside overflow:hidden */}
+            <div style={{
+              position: 'absolute', top: '195px', left: '0px',
+              background: '#fff', border: '1px solid #E2E8F0',
+              borderRadius: '9999px', padding: '9px 18px 9px 8px',
+              display: 'flex', alignItems: 'center', gap: '9px',
+              boxShadow: '0 10px 28px -4px rgba(0,41,112,0.18)',
+              fontSize: '13px', fontWeight: 700, color: '#0F172A', zIndex: 20,
+              whiteSpace: 'nowrap',
+            }}>
+              <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: '#00BAF2', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
+              </div>
+              Faster Claims
+            </div>
+
+            <div style={{
+              position: 'absolute', top: '295px', left: '0px',
+              background: '#fff', border: '1px solid #E2E8F0',
+              borderRadius: '9999px', padding: '9px 18px 9px 8px',
+              display: 'flex', alignItems: 'center', gap: '9px',
+              boxShadow: '0 10px 28px -4px rgba(0,41,112,0.18)',
+              fontSize: '13px', fontWeight: 700, color: '#0F172A', zIndex: 20,
+              whiteSpace: 'nowrap',
+            }}>
+              <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: '#E0F4FE', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00BAF2" strokeWidth="2.3">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" />
+                </svg>
+              </div>
+              Clearer Coverage
+            </div>
+
+            {/* Floating Card 1: Policy Analysis — on outer wrapper */}
+            <div style={{
+              position: 'absolute', top: '28px', right: '-10px',
+              background: '#fff', borderRadius: '16px',
+              border: '1px solid #E2E8F0',
+              padding: '14px 16px',
+              boxShadow: '0 14px 32px -6px rgba(0,41,112,0.16), 0 4px 12px rgba(0,0,0,0.05)',
+              width: '210px', zIndex: 20,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', paddingBottom: '8px', borderBottom: '1px solid #F1F5F9' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00BAF2" strokeWidth="2.4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  <span style={{ fontSize: '12px', fontWeight: 800, color: '#0F172A' }}>Policy Analysis</span>
+                </div>
+                <span style={{ background: '#DCFCE7', color: '#15803D', fontSize: '9px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px' }}>COMPLETED</span>
+              </div>
+              {[
+                { label: 'Room Rent Limit', ok: true },
+                { label: 'ICU Charges', ok: true },
+                { label: 'Pre-Post Hospitalisation', ok: true },
+                { label: 'Non-Payable Items', ok: false, badge: '2 found' },
+              ].map(({ label, ok, badge }) => (
+                <div key={label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px', fontSize: '11px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#334155', fontWeight: 600 }}>
+                    {ok ? <CheckIcon /> : <CrossIcon />}
+                    {label}
+                  </div>
+                  {ok
+                    ? <span style={{ color: '#15803D', fontWeight: 700 }}>Covered</span>
+                    : <span style={{ background: '#FEE2E2', color: '#DC2626', fontSize: '9.5px', fontWeight: 800, padding: '1px 6px', borderRadius: '4px' }}>{badge}</span>
+                  }
+                </div>
+              ))}
+            </div>
+
+            {/* Floating Card 2: Hospital Bill Analysis — on outer wrapper */}
+            <div style={{
+              position: 'absolute', bottom: '32px', right: '-10px',
+              background: '#fff', borderRadius: '16px',
+              border: '1px solid #E2E8F0',
+              padding: '14px 16px',
+              boxShadow: '0 14px 32px -6px rgba(0,41,112,0.16), 0 4px 12px rgba(0,0,0,0.05)',
+              width: '210px', zIndex: 20,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', paddingBottom: '8px', borderBottom: '1px solid #F1F5F9' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                  <span style={{ fontSize: '12px', fontWeight: 800, color: '#0F172A' }}>Hospital Bill Analysis</span>
+                </div>
+                <span style={{ background: '#DCFCE7', color: '#15803D', fontSize: '9px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px' }}>COMPLETED</span>
+              </div>
+              {[
+                { sign: '+', signColor: '#0284C7', label: 'Total Bill Amount', val: '₹2,00,000', valColor: '#0F172A' },
+                { sign: '+', signColor: '#16A34A', label: 'Expected Insurance Payout', val: '₹1,30,000', valColor: '#16A34A' },
+                { sign: '+', signColor: '#E11D48', label: 'Your Out-of-Pocket', val: '₹70,000', valColor: '#E11D48' },
+              ].map(({ sign, signColor, label, val, valColor }) => (
+                <div key={label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px', fontSize: '11px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#334155', fontWeight: 600 }}>
+                    <span style={{ fontWeight: 800, fontSize: '13px', color: signColor }}>{sign}</span>
+                    {label}
+                  </div>
+                  <span style={{ fontSize: '12px', fontWeight: 800, color: valColor }}>{val}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Photo backdrop — overflow:hidden only to clip the bg image to rounded corners */}
             <div style={{
               borderRadius: '32px',
               padding: '40px 24px',
@@ -140,47 +240,13 @@ export default function Landing() {
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}>
-              {/* Photo tint + blur overlay */}
+              {/* Tint + blur overlay */}
               <div style={{
                 position: 'absolute', inset: 0,
                 backdropFilter: 'blur(18px)',
                 background: 'linear-gradient(140deg, rgba(220,238,255,0.82) 0%, rgba(200,228,252,0.88) 100%)',
-                borderRadius: '32px',
                 zIndex: 0,
               }} />
-
-              {/* Left floating badges — overhang the card edge */}
-              <div style={{
-                position: 'absolute', top: '195px', left: '-52px',
-                background: '#fff', border: '1px solid #E2E8F0',
-                borderRadius: '9999px', padding: '9px 18px 9px 8px',
-                display: 'flex', alignItems: 'center', gap: '9px',
-                boxShadow: '0 10px 28px -4px rgba(0,41,112,0.18)',
-                fontSize: '13px', fontWeight: 700, color: '#0F172A', zIndex: 6,
-                whiteSpace: 'nowrap',
-              }}>
-                <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: '#00BAF2', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
-                </div>
-                Faster Claims
-              </div>
-
-              <div style={{
-                position: 'absolute', top: '295px', left: '-52px',
-                background: '#fff', border: '1px solid #E2E8F0',
-                borderRadius: '9999px', padding: '9px 18px 9px 8px',
-                display: 'flex', alignItems: 'center', gap: '9px',
-                boxShadow: '0 10px 28px -4px rgba(0,41,112,0.18)',
-                fontSize: '13px', fontWeight: 700, color: '#0F172A', zIndex: 6,
-                whiteSpace: 'nowrap',
-              }}>
-                <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: '#E0F4FE', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00BAF2" strokeWidth="2.3">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" />
-                  </svg>
-                </div>
-                Clearer Coverage
-              </div>
 
               {/* iPhone Mockup */}
               <div style={{
@@ -260,72 +326,6 @@ export default function Landing() {
                     <span style={{ fontSize: '8px', color: '#64748B' }}>with Paytm EMI</span>
                   </div>
                 </div>
-              </div>
-
-              {/* Floating Card 1: Policy Analysis */}
-              <div style={{
-                position: 'absolute', top: '28px', right: '-20px',
-                background: '#fff', borderRadius: '16px',
-                border: '1px solid #E2E8F0',
-                padding: '14px 16px',
-                boxShadow: '0 14px 32px -6px rgba(0,41,112,0.16), 0 4px 12px rgba(0,0,0,0.05)',
-                width: '222px', zIndex: 10,
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', paddingBottom: '8px', borderBottom: '1px solid #F1F5F9' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00BAF2" strokeWidth="2.4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                    <span style={{ fontSize: '12px', fontWeight: 800, color: '#0F172A' }}>Policy Analysis</span>
-                  </div>
-                  <span style={{ background: '#DCFCE7', color: '#15803D', fontSize: '9px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px' }}>COMPLETED</span>
-                </div>
-                {[
-                  { label: 'Room Rent Limit', ok: true },
-                  { label: 'ICU Charges', ok: true },
-                  { label: 'Pre-Post Hospitalisation', ok: true },
-                  { label: 'Non-Payable Items', ok: false, badge: '2 found' },
-                ].map(({ label, ok, badge }) => (
-                  <div key={label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px', fontSize: '11px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#334155', fontWeight: 600 }}>
-                      {ok ? <CheckIcon /> : <CrossIcon />}
-                      {label}
-                    </div>
-                    {ok
-                      ? <span style={{ color: '#15803D', fontWeight: 700 }}>Covered</span>
-                      : <span style={{ background: '#FEE2E2', color: '#DC2626', fontSize: '9.5px', fontWeight: 800, padding: '1px 6px', borderRadius: '4px' }}>{badge}</span>
-                    }
-                  </div>
-                ))}
-              </div>
-
-              {/* Floating Card 2: Hospital Bill Analysis */}
-              <div style={{
-                position: 'absolute', bottom: '32px', right: '-20px',
-                background: '#fff', borderRadius: '16px',
-                border: '1px solid #E2E8F0',
-                padding: '14px 16px',
-                boxShadow: '0 14px 32px -6px rgba(0,41,112,0.16), 0 4px 12px rgba(0,0,0,0.05)',
-                width: '222px', zIndex: 10,
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', paddingBottom: '8px', borderBottom: '1px solid #F1F5F9' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-                    <span style={{ fontSize: '12px', fontWeight: 800, color: '#0F172A' }}>Hospital Bill Analysis</span>
-                  </div>
-                  <span style={{ background: '#DCFCE7', color: '#15803D', fontSize: '9px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px' }}>COMPLETED</span>
-                </div>
-                {[
-                  { sign: '+', signColor: '#0284C7', label: 'Total Bill Amount', val: '₹2,00,000', valColor: '#0F172A' },
-                  { sign: '+', signColor: '#16A34A', label: 'Expected Insurance Payout', val: '₹1,30,000', valColor: '#16A34A' },
-                  { sign: '+', signColor: '#E11D48', label: 'Your Out-of-Pocket', val: '₹70,000', valColor: '#E11D48' },
-                ].map(({ sign, signColor, label, val, valColor }) => (
-                  <div key={label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px', fontSize: '11px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#334155', fontWeight: 600 }}>
-                      <span style={{ fontWeight: 800, fontSize: '13px', color: signColor }}>{sign}</span>
-                      {label}
-                    </div>
-                    <span style={{ fontSize: '12px', fontWeight: 800, color: valColor }}>{val}</span>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
