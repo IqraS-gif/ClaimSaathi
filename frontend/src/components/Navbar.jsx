@@ -98,16 +98,6 @@ export default function Navbar() {
 
         {/* Right side controls */}
         <div className="paytm-nav-right">
-          <button
-            type="button"
-            className="paytm-cta-btn"
-            onClick={() => navigate('/claim')}
-          >
-            <span>Check Claim Split</span>
-            <span style={{ fontSize: '15px' }}>&rarr;</span>
-          </button>
-
-
         </div>
       </div>
     </nav>

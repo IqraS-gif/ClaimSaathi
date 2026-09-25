@@ -1,64 +1,48 @@
 /* ==========================================================================
-   SARVAM AI CHATBOT — VANILLA CSS DESIGN SYSTEM
-   Fixed floating launcher, expanded modal, context pill bar, and chat bubbles
+   CLAIMSAATHI AI CHATBOT — ULTRA-CLEAN PREMIUM DESIGN SYSTEM
+   Zero-collision header, refined typography, glassmorphic polish & micro-interactions
    ========================================================================== */
 
-/* Floating Launcher Button */
+/* ── FLOATING LAUNCHER BUTTON (CLOSED STATE) ──────────────────────────────── */
 .saathi-chat-launcher {
   position: fixed;
-  bottom: 28px;
-  right: 28px;
+  bottom: 26px;
+  right: 26px;
   z-index: 9999;
   display: flex;
   align-items: center;
   gap: 12px;
-  background: linear-gradient(135deg, #002970 0%, #00469b 55%, #00BAF2 100%);
+  background: linear-gradient(135deg, #071739 0%, #002970 55%, #004ea3 100%);
   color: #FFFFFF;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  padding: 12px 20px 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 10px 18px 10px 12px;
   border-radius: 9999px;
   cursor: pointer;
-  box-shadow: 0 16px 36px -6px rgba(0, 41, 112, 0.42), 0 0 25px 2px rgba(0, 186, 242, 0.35);
+  box-shadow: 0 14px 34px -4px rgba(0, 25, 65, 0.42), 0 0 22px 2px rgba(0, 186, 242, 0.25);
   transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
   text-decoration: none;
   user-select: none;
+  outline: none;
 }
 
 .saathi-chat-launcher:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 20px 42px -6px rgba(0, 41, 112, 0.5), 0 0 30px 4px rgba(0, 186, 242, 0.45);
+  box-shadow: 0 18px 42px -4px rgba(0, 25, 65, 0.5), 0 0 30px 4px rgba(0, 186, 242, 0.4);
+  border-color: rgba(255, 255, 255, 0.45);
 }
 
 .saathi-chat-launcher:active {
   transform: translateY(0) scale(0.98);
 }
 
-/* Pulsing Badge on Launcher */
-.saathi-launcher-pulse {
-  position: absolute;
-  top: -3px;
-  right: -3px;
-  width: 14px;
-  height: 14px;
-  background: #00BAF2;
-  border: 2.5px solid #FFFFFF;
-  border-radius: 9999px;
-  box-shadow: 0 0 10px #00BAF2;
-  animation: saathiPulse 2s infinite;
-}
-
-@keyframes saathiPulse {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 186, 242, 0.7); }
-  70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(0, 186, 242, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 186, 242, 0); }
-}
-
-.saathi-launcher-icon {
-  width: 36px;
-  height: 36px;
+.saathi-launcher-avatar {
+  position: relative;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.16);
   backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,8 +51,20 @@
   transition: transform 0.3s ease;
 }
 
-.saathi-chat-launcher:hover .saathi-launcher-icon {
-  transform: rotate(12deg);
+.saathi-chat-launcher:hover .saathi-launcher-avatar {
+  transform: rotate(8deg);
+}
+
+.saathi-launcher-online-dot {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 10px;
+  height: 10px;
+  background: #10B981;
+  border: 2px solid #002970;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #10B981;
 }
 
 .saathi-launcher-texts {
@@ -77,28 +73,33 @@
   text-align: left;
 }
 
+.saathi-launcher-title-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
 .saathi-launcher-title {
   font-size: 13.5px;
   font-weight: 800;
   letter-spacing: -0.2px;
   line-height: 1.2;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  color: #FFFFFF;
 }
 
-.saathi-launcher-sarvam-tag {
-  background: rgba(255, 255, 255, 0.25);
+.saathi-launcher-tag {
+  background: rgba(0, 186, 242, 0.22);
+  border: 1px solid rgba(0, 186, 242, 0.45);
   font-size: 9px;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: 1px 6px;
+  padding: 1.5px 6px;
   border-radius: 9999px;
-  color: #E8F7FE;
+  color: #BAE6FD;
 }
 
-.saathi-launcher-subtitle {
+.saathi-launcher-desc {
   font-size: 11px;
   font-weight: 600;
   color: #D6F1FD;
@@ -106,202 +107,283 @@
   margin-top: 2px;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   EXPANDED CHAT WINDOW MODAL
-   ───────────────────────────────────────────────────────────────────────────── */
+.saathi-launcher-sparkle {
+  margin-left: 2px;
+  animation: saathiShimmer 2.2s infinite ease-in-out;
+}
+
+@keyframes saathiShimmer {
+  0%, 100% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 6px #00BAF2); }
+}
+
+/* ── EXPANDED CHAT WINDOW MODAL ───────────────────────────────────────────── */
 .saathi-chat-window {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  width: 420px;
+  width: 435px;
   max-width: calc(100vw - 32px);
-  height: 590px;
-  max-height: calc(100vh - 80px);
+  height: 615px;
+  max-height: calc(100vh - 70px);
   background: #FFFFFF;
-  border-radius: 26px;
-  border: 1.5px solid #CFE6FA;
-  box-shadow: 0 24px 70px -10px rgba(0, 41, 112, 0.35), 0 10px 30px rgba(0, 186, 242, 0.2);
+  border-radius: 24px;
+  border: 1px solid rgba(0, 41, 112, 0.12);
+  box-shadow: 0 24px 60px -12px rgba(0, 25, 65, 0.32), 0 8px 24px -4px rgba(0, 186, 242, 0.15);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   z-index: 10000;
-  animation: saathiSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: saathiModalOpen 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: height 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
 }
 
 .saathi-chat-window.minimized {
-  height: 68px;
+  height: 66px;
+  box-shadow: 0 12px 30px rgba(0, 25, 65, 0.25);
+  border-radius: 20px;
 }
 
-@keyframes saathiSlideUp {
-  from { opacity: 0; transform: translateY(20px) scale(0.96); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes saathiModalOpen {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-/* Chat Header */
+/* ── SMART UNCLUTTERED HEADER ─────────────────────────────────────────────── */
 .saathi-header {
-  background: linear-gradient(135deg, #002970 0%, #00469b 55%, #00BAF2 100%);
+  background: linear-gradient(135deg, #071739 0%, #002970 60%, #004aa0 100%);
   color: #FFFFFF;
-  padding: 14px 18px;
+  padding: 13px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   flex-shrink: 0;
   user-select: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .saathi-header-info {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
 }
 
 .saathi-bot-avatar {
   position: relative;
-  width: 40px;
-  height: 40px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #FFFFFF;
   flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .saathi-avatar-dot {
   position: absolute;
   top: -2px;
   right: -2px;
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   background: #10B981;
-  border: 2px solid #002970;
+  border: 2px solid #071739;
   border-radius: 50%;
+  box-shadow: 0 0 6px #10B981;
 }
 
 .saathi-header-meta {
   display: flex;
   flex-direction: column;
-}
-
-.saathi-header-title-row {
-  display: flex;
-  align-items: center;
-  gap: 7px;
+  min-width: 0;
 }
 
 .saathi-header-name {
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 800;
-  letter-spacing: -0.2px;
+  letter-spacing: -0.3px;
   color: #FFFFFF;
   line-height: 1.2;
+  white-space: nowrap;
 }
 
-.saathi-header-powered {
-  background: rgba(255, 255, 255, 0.22);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  font-size: 9px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  padding: 2px 7px;
-  border-radius: 9999px;
-  color: #E0F2FE;
-}
-
-.saathi-header-context-tag {
-  font-size: 11px;
-  font-weight: 600;
-  color: #BAE6FD;
-  line-height: 1.2;
-  margin-top: 3px;
+.saathi-header-status-row {
   display: flex;
   align-items: center;
   gap: 5px;
+  margin-top: 2px;
+  min-width: 0;
+  overflow: hidden;
 }
 
-/* Header Controls & Language Switcher */
+.saathi-status-pulse {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #38BDF8;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px #38BDF8;
+}
+
+.saathi-status-text {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #BAE6FD;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── HEADER CONTROLS (RIGHT ALIGNED, ZERO COLLISION) ─────────────────────── */
 .saathi-header-controls {
   display: flex;
   align-items: center;
   gap: 6px;
+  flex-shrink: 0;
 }
 
+/* Segmented Language Switcher */
 .saathi-lang-switcher {
   display: flex;
-  background: rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
   padding: 2px;
+  gap: 1px;
 }
 
 .saathi-lang-btn {
   background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.75);
   font-size: 10.5px;
   font-weight: 700;
   padding: 3px 6px;
-  border-radius: 7px;
+  border-radius: 6px;
   cursor: pointer;
   transition: all 0.15s ease;
+  line-height: 1;
+}
+
+.saathi-lang-btn:hover {
+  color: #FFFFFF;
 }
 
 .saathi-lang-btn.active {
   background: #FFFFFF;
   color: #002970;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  font-weight: 800;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
-.saathi-icon-btn {
+/* Audio Toggle (Icon-Only, Clean & Compact) */
+.saathi-icon-action-btn {
   background: rgba(255, 255, 255, 0.12);
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #E0F2FE;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  flex-shrink: 0;
+}
+
+.saathi-icon-action-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
   color: #FFFFFF;
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
+  transform: scale(1.04);
+}
+
+.saathi-icon-action-btn.active {
+  background: #00BAF2;
+  color: #071739;
+  border-color: #00BAF2;
+  box-shadow: 0 0 10px rgba(0, 186, 242, 0.5);
+}
+
+/* Action Window Icons (Minimize & Close) */
+.saathi-window-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.15s ease;
+  flex-shrink: 0;
 }
 
-.saathi-icon-btn:hover {
+.saathi-window-btn:hover {
   background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.04);
 }
 
-.saathi-icon-btn.close:hover {
-  background: rgba(239, 68, 68, 0.4);
+.saathi-window-btn.close:hover {
+  background: rgba(239, 68, 68, 0.85);
+  border-color: transparent;
+  color: #FFFFFF;
 }
 
-/* Active Context Banner Strip */
-.saathi-context-strip {
-  background: #F0F8FF;
-  border-bottom: 1px solid #D6EBFA;
-  padding: 8px 16px;
+/* ── CONTEXT RIBBON STRIP ─────────────────────────────────────────────────── */
+.saathi-context-ribbon {
+  background: linear-gradient(90deg, #F0F8FF 0%, #F8FAFC 100%);
+  border-bottom: 1px solid #E2EFFC;
+  padding: 7px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
   flex-shrink: 0;
   font-size: 11px;
-  color: #002970;
 }
 
-.saathi-context-strip-left {
+.saathi-context-left {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-weight: 600;
+  min-width: 0;
+  flex: 1;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
-.saathi-context-strip-reset {
+.saathi-sparkle-dot {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.saathi-context-subtitle {
+  color: #002970;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 11px;
+}
+
+.saathi-reset-btn {
   background: transparent;
   border: none;
   color: #64748B;
@@ -309,24 +391,25 @@
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
   cursor: pointer;
-  padding: 2px 6px;
+  padding: 2px 7px;
   border-radius: 6px;
   transition: all 0.15s ease;
+  flex-shrink: 0;
 }
 
-.saathi-context-strip-reset:hover {
+.saathi-reset-btn:hover {
   color: #002970;
-  background: rgba(0, 41, 112, 0.06);
+  background: rgba(0, 41, 112, 0.08);
 }
 
-/* Chat Message Area */
+/* ── MESSAGES CONTAINER ──────────────────────────────────────────────────── */
 .saathi-messages-box {
   flex: 1;
   overflow-y: auto;
-  padding: 16px;
-  background: linear-gradient(180deg, #F8FBFE 0%, #FFFFFF 100%);
+  padding: 16px 14px;
+  background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%);
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -335,7 +418,7 @@
 .saathi-message-row {
   display: flex;
   flex-direction: column;
-  max-width: 86%;
+  max-width: 88%;
 }
 
 .saathi-message-row.user {
@@ -348,86 +431,164 @@
   align-items: flex-start;
 }
 
+/* Assistant Header Label */
+.saathi-bot-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 4px;
+  padding-left: 2px;
+}
+
+.saathi-bot-avatar-mini {
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
+  background: #002970;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.saathi-bot-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: #002970;
+}
+
+/* Message Bubble */
 .saathi-bubble {
-  padding: 12px 16px;
+  padding: 12px 15px;
   border-radius: 18px;
   font-size: 13.5px;
   line-height: 1.55;
-  box-shadow: 0 2px 8px rgba(0, 41, 112, 0.05);
+  word-break: break-word;
 }
 
+/* User Message */
 .saathi-message-row.user .saathi-bubble {
-  background: #002970;
+  background: linear-gradient(135deg, #002970 0%, #004da1 100%);
   color: #FFFFFF;
   border-bottom-right-radius: 4px;
+  box-shadow: 0 4px 14px rgba(0, 41, 112, 0.22);
 }
 
+/* Assistant Message */
 .saathi-message-row.assistant .saathi-bubble {
   background: #FFFFFF;
   color: #1E293B;
-  border: 1.5px solid #E2E8F0;
+  border: 1px solid rgba(0, 41, 112, 0.1);
   border-bottom-left-radius: 4px;
+  box-shadow: 0 3px 12px rgba(0, 41, 112, 0.05);
 }
 
 .saathi-bubble-p {
-  margin: 4px 0;
+  margin: 3px 0;
+}
+
+.saathi-bubble-space {
+  height: 6px;
 }
 
 .saathi-bubble-bullet {
   display: flex;
   align-items: flex-start;
-  gap: 6px;
+  gap: 7px;
   margin: 4px 0;
   color: #334155;
 }
 
 .saathi-bullet-dot {
-  color: #00BAF2;
-  font-weight: 800;
-  font-size: 14px;
-  line-height: 1.2;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #00BAF2;
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+.saathi-bullet-text {
+  flex: 1;
 }
 
 .saathi-bubble-strong {
   font-weight: 700;
-  color: #0F172A;
+  color: #0A1628;
 }
 
 .saathi-message-row.user .saathi-bubble-strong {
   color: #FFFFFF;
 }
 
+/* Message Meta & Actions */
 .saathi-message-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 10px;
   color: #94A3B8;
   margin-top: 4px;
-  padding: 0 4px;
+  padding: 0 2px;
+}
+
+.saathi-meta-time {
+  font-weight: 500;
+}
+
+.saathi-bubble-actions {
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-.saathi-sarvam-source {
-  color: #00BAF2;
-  font-weight: 700;
+.saathi-action-icon-btn {
+  background: transparent;
+  border: none;
+  color: #64748B;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 2px 5px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: all 0.15s ease;
 }
 
-/* Typing Indicator */
-.saathi-typing {
-  align-self: flex-start;
+.saathi-action-icon-btn:hover {
+  color: #002970;
+  background: rgba(0, 41, 112, 0.07);
+}
+
+.saathi-action-icon-btn.speaking {
+  color: #00BAF2;
+  background: rgba(0, 186, 242, 0.12);
+  animation: saathiSpeakerPulse 1s infinite alternate;
+}
+
+@keyframes saathiSpeakerPulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+/* ── TYPING INDICATOR ─────────────────────────────────────────────────────── */
+.saathi-typing-card {
   background: #FFFFFF;
-  border: 1.5px solid #E2E8F0;
-  padding: 10px 16px;
-  border-radius: 18px;
+  border: 1px solid rgba(0, 41, 112, 0.1);
+  padding: 10px 14px;
+  border-radius: 16px;
   border-bottom-left-radius: 4px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  box-shadow: 0 2px 8px rgba(0, 41, 112, 0.04);
+  gap: 9px;
+  box-shadow: 0 3px 12px rgba(0, 41, 112, 0.04);
 }
 
 .saathi-typing-dots {
   display: flex;
+  align-items: center;
   gap: 4px;
 }
 
@@ -455,20 +616,21 @@
 }
 
 .saathi-typing-text {
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
   color: #64748B;
 }
 
-/* Quick Prompt Suggestion Pills */
+/* ── QUICK PROMPT PILLS ──────────────────────────────────────────────────── */
 .saathi-quick-prompts-bar {
   display: flex;
-  gap: 8px;
+  gap: 7px;
   overflow-x: auto;
-  padding: 10px 14px;
+  padding: 9px 14px;
   background: #FFFFFF;
-  border-top: 1px solid #EEF2F6;
+  border-top: 1px solid #EEF4FA;
   flex-shrink: 0;
+  scrollbar-width: none;
 }
 
 .saathi-quick-prompts-bar::-webkit-scrollbar {
@@ -481,11 +643,11 @@
   color: #002970;
   font-size: 11.5px;
   font-weight: 600;
-  padding: 6px 12px;
+  padding: 5px 12px;
   border-radius: 9999px;
   white-space: nowrap;
   cursor: pointer;
-  transition: all 0.18s ease;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   gap: 5px;
@@ -496,12 +658,22 @@
   background: #002970;
   color: #FFFFFF;
   border-color: #002970;
-  transform: translateY(-1px);
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 10px rgba(0, 41, 112, 0.18);
 }
 
-/* Input Bar */
+.saathi-chip-icon {
+  color: #00BAF2;
+  font-size: 11px;
+}
+
+.saathi-chip-btn:hover .saathi-chip-icon {
+  color: #38BDF8;
+}
+
+/* ── INPUT BAR ───────────────────────────────────────────────────────────── */
 .saathi-input-bar {
-  padding: 12px 14px 10px;
+  padding: 10px 14px 10px;
   background: #FFFFFF;
   border-top: 1px solid #E2E8F0;
   flex-shrink: 0;
@@ -512,14 +684,14 @@
   align-items: center;
   background: #F8FAFC;
   border: 1.5px solid #CBD5E1;
-  border-radius: 16px;
-  padding: 4px 6px 4px 14px;
+  border-radius: 14px;
+  padding: 3px 5px 3px 12px;
   transition: all 0.2s ease;
 }
 
 .saathi-input-box:focus-within {
   border-color: #00BAF2;
-  box-shadow: 0 0 0 3px rgba(0, 186, 242, 0.18);
+  box-shadow: 0 0 0 3px rgba(0, 186, 242, 0.16);
   background: #FFFFFF;
 }
 
@@ -527,22 +699,67 @@
   flex: 1;
   border: none;
   background: transparent;
-  font-size: 13.5px;
+  font-size: 13px;
   font-family: inherit;
   color: #0F172A;
   outline: none;
-  padding: 6px 0;
+  padding: 7px 0;
+  min-width: 0;
 }
 
 .saathi-input-field::placeholder {
   color: #94A3B8;
+  font-size: 12.5px;
+}
+
+/* Send & Mic Buttons */
+.saathi-mic-btn {
+  width: 33px;
+  height: 33px;
+  border-radius: 10px;
+  background: transparent;
+  color: #002970;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+  margin-right: 2px;
+}
+
+.saathi-mic-btn:hover {
+  background: #E0F2FE;
+  color: #00BAF2;
+}
+
+.saathi-mic-btn.listening {
+  background: #EF4444;
+  color: #FFFFFF;
+  animation: saathiMicPulse 1.2s infinite;
+}
+
+@keyframes saathiMicPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    transform: scale(1);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+    transform: scale(1.05);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    transform: scale(1);
+  }
 }
 
 .saathi-send-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 12px;
-  background: #002970;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #002970 0%, #0060c4 100%);
   color: #FFFFFF;
   border: none;
   display: flex;
@@ -554,94 +771,53 @@
 }
 
 .saathi-send-btn:hover:not(:disabled) {
-  background: #00469b;
-  transform: scale(1.05);
+  background: linear-gradient(135deg, #002970 0%, #00BAF2 100%);
+  transform: scale(1.04);
+  box-shadow: 0 3px 10px rgba(0, 186, 242, 0.35);
 }
 
 .saathi-send-btn:disabled {
-  opacity: 0.35;
+  opacity: 0.3;
   cursor: not-allowed;
+  transform: none;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   VOICE INPUT (MICROPHONE) & VOICE OUTPUT (SPEECH SYNTHESIS)
-   ───────────────────────────────────────────────────────────────────────────── */
-.saathi-mic-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 12px;
-  background: #F1F5F9;
-  color: #002970;
-  border: 1.5px solid #CBD5E1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  flex-shrink: 0;
-  margin-right: 4px;
-}
-
-.saathi-mic-btn:hover {
-  background: #E0F2FE;
-  border-color: #00BAF2;
-  color: #00BAF2;
-  transform: scale(1.05);
-}
-
-.saathi-mic-btn.listening {
-  background: #EF4444;
-  color: #FFFFFF;
-  border-color: #DC2626;
-  animation: saathiMicPulse 1.2s infinite;
-}
-
-@keyframes saathiMicPulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
-    transform: scale(1);
-  }
-  70% {
-    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
-    transform: scale(1.06);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
-    transform: scale(1);
-  }
-}
-
-/* Listening Voice Banner */
+/* Voice Listening Animated Banner */
 .saathi-voice-listening-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: linear-gradient(135deg, #FEF2F2 0%, #FFF1F2 100%);
   border: 1px solid #FECDD3;
-  padding: 8px 14px;
-  border-radius: 12px;
-  margin-bottom: 8px;
-  font-size: 11.5px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  margin-bottom: 7px;
+  font-size: 11px;
   font-weight: 600;
   color: #BE123C;
   animation: saathiFadeIn 0.2s ease;
 }
 
+@keyframes saathiFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .saathi-voice-listening-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
 }
 
 .saathi-voice-wave {
   display: flex;
   align-items: center;
-  gap: 3px;
-  height: 14px;
+  gap: 2.5px;
+  height: 12px;
 }
 
 .saathi-wave-bar {
-  width: 3px;
+  width: 2.5px;
   height: 100%;
   background: #E11D48;
   border-radius: 9999px;
@@ -651,9 +827,10 @@
 .saathi-wave-bar:nth-child(2) { animation-delay: 0.15s; height: 60%; }
 .saathi-wave-bar:nth-child(3) { animation-delay: 0.3s;  height: 90%; }
 .saathi-wave-bar:nth-child(4) { animation-delay: 0.45s; height: 40%; }
+.saathi-wave-bar:nth-child(5) { animation-delay: 0.6s;  height: 75%; }
 
 @keyframes saathiWave {
-  from { transform: scaleY(0.3); }
+  from { transform: scaleY(0.25); }
   to { transform: scaleY(1); }
 }
 
@@ -661,95 +838,64 @@
   background: transparent;
   border: none;
   color: #E11D48;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
   cursor: pointer;
   padding: 2px 6px;
-  border-radius: 6px;
+  border-radius: 5px;
 }
 
 .saathi-voice-cancel-btn:hover {
   background: rgba(225, 29, 72, 0.1);
 }
 
-/* Speaker TTS Icon Button on message bubble */
-.saathi-speaker-btn {
-  background: transparent;
-  border: none;
-  color: #94A3B8;
-  cursor: pointer;
-  padding: 2px 4px;
-  border-radius: 6px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.15s ease;
-}
-
-.saathi-speaker-btn:hover {
-  color: #00BAF2;
-  background: rgba(0, 186, 242, 0.1);
-}
-
-.saathi-speaker-btn.speaking {
-  color: #00BAF2;
-  animation: saathiSpeakerPulse 1s infinite alternate;
-}
-
-@keyframes saathiSpeakerPulse {
-  from { transform: scale(1); }
-  to { transform: scale(1.15); }
-}
-
-/* Header Auto-Speak Toggle Button */
-.saathi-audio-toggle-btn {
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #FFFFFF;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 8px;
+.saathi-speech-error-box {
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 1px solid #FECDD3;
+  font-size: 10.5px;
+  padding: 5px 10px;
   border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  transition: all 0.15s ease;
+  margin-bottom: 6px;
 }
 
-.saathi-audio-toggle-btn.active {
-  background: #FFFFFF;
-  color: #002970;
-  border-color: #FFFFFF;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-}
-
-.saathi-input-subtext {
+/* Footer Security Text */
+.saathi-input-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 10px;
+  font-size: 9.5px;
   color: #94A3B8;
-  margin-top: 6px;
-  padding: 0 4px;
+  margin-top: 5px;
+  padding: 0 2px;
 }
 
-.saathi-confidential-tag {
-  color: #00BAF2;
-  font-weight: 600;
+.saathi-footer-security {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-/* Responsive adjustment for small screens */
+.saathi-footer-tag {
+  color: #10B981;
+  font-weight: 700;
+}
+
+/* ── RESPONSIVE STYLING ───────────────────────────────────────────────────── */
 @media (max-width: 480px) {
   .saathi-chat-window {
     right: 12px;
     bottom: 12px;
     width: calc(100vw - 24px);
-    height: 520px;
+    height: 540px;
+    border-radius: 18px;
   }
   .saathi-chat-launcher {
     right: 16px;
     bottom: 16px;
+    padding: 8px 14px 8px 10px;
+  }
+  .saathi-header {
+    padding: 11px 13px;
   }
 }
-

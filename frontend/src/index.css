@@ -197,7 +197,10 @@ ul { list-style: none; }
 .footer { background: var(--blue-dark); color: var(--white); padding: 60px 0 28px; }
 .footer-top { display: flex; gap: 60px; margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,.1); }
 .footer-brand { flex: 1; }
-.footer-brand .logo { margin-bottom: 14px; font-size: 20px; }
+.footer-brand .logo { margin-bottom: 14px; font-size: 22px; display: flex; align-items: baseline; gap: 3px; font-weight: 800; cursor: pointer; }
+.footer-brand .logo .logo-claim { color: #FFFFFF; }
+.footer-brand .logo .logo-saathi { color: var(--blue); }
+.footer-brand .logo .logo-by { font-size: 11px; font-weight: 700; color: #002970; letter-spacing: 0.5px; text-transform: uppercase; margin-left: 8px; padding: 2px 8px; background: #FFFFFF; border-radius: 20px; }
 .footer-brand p { font-size: 14px; color: rgba(255,255,255,.6); line-height: 1.65; max-width: 300px; }
 .footer-links { display: flex; gap: 60px; }
 .fl-col { display: flex; flex-direction: column; gap: 12px; }

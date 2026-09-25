@@ -3,21 +3,23 @@ import { useLocation } from 'react-router-dom'
 import client from '../api/client'
 import './Chatbot.css'
 
-// Crisp SVG Vector Icons (No emoji dependencies)
-const SparkleIcon = ({ size = 18, color = 'currentColor' }) => (
+// ─────────────────────────────────────────────────────────────────────────────
+// CRISP SVG VECTOR ICONS
+// ─────────────────────────────────────────────────────────────────────────────
+const SparkleIcon = ({ size = 15, color = 'currentColor' }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
     <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3z"/>
   </svg>
 )
 
-const SendIcon = ({ size = 17 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="22" y1="2" x2="11" y2="13"/>
-    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+const SendIcon = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 2L11 13" />
+    <path d="M22 2L15 22L11 13L2 9L22 2Z" />
   </svg>
 )
 
-const MicIcon = ({ size = 18 }) => (
+const MicIcon = ({ size = 16 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
     <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
@@ -41,22 +43,31 @@ const SpeakerMuteIcon = ({ size = 15 }) => (
   </svg>
 )
 
-const CloseIcon = ({ size = 16 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+const CloseIcon = ({ size = 15 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
     <line x1="18" y1="6" x2="6" y2="18"/>
     <line x1="6" y1="6" x2="18" y2="18"/>
   </svg>
 )
 
-const MinimizeIcon = ({ size = 16 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+const MinimizeIcon = ({ size = 15 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <line x1="5" y1="12" x2="19" y2="12"/>
+  </svg>
+)
+
+const MaximizeIcon = ({ size = 15 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="15 3 21 3 21 9"/>
+    <polyline points="9 21 3 21 3 15"/>
+    <line x1="21" y1="3" x2="14" y2="10"/>
+    <line x1="3" y1="21" x2="10" y2="14"/>
   </svg>
 )
 
 const BotIcon = ({ size = 20 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="11" width="18" height="10" rx="2"/>
+    <rect x="3" y="11" width="18" height="10" rx="4"/>
     <circle cx="12" cy="5" r="2"/>
     <path d="M12 7v4"/>
     <line x1="8" y1="16" x2="8" y2="16.01"/>
@@ -65,8 +76,28 @@ const BotIcon = ({ size = 20 }) => (
 )
 
 const RefreshIcon = ({ size = 13 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+  </svg>
+)
+
+const CopyIcon = ({ size = 13 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+  </svg>
+)
+
+const CheckIcon = ({ size = 13 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="20 6 9 17 4 12"/>
+  </svg>
+)
+
+const ShieldCheckIcon = ({ size = 12 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    <polyline points="9 12 11 14 15 10"/>
   </svg>
 )
 
@@ -76,34 +107,34 @@ const RefreshIcon = ({ size = 13 }) => (
 const FEATURE_DATA = {
   claim: {
     en: {
-      title: 'Claim & Bill Simulator Context',
-      badge: '🏥 Bill Deductions Loaded',
-      subtitle: 'Context: ₹2,00,000 Bill • ₹70,000 Deductions (Clauses 3.1, 3.2, 7.2, 5.1)',
-      initialGreeting: "Namaste! I'm your ClaimSaathi Assistant powered by **Sarvam AI**.\n\nI have loaded your **₹2,00,000 Fortis hospital bill simulation**.\n• Estimated Insurer Payout: **₹1,30,000** (65%)\n• Out-of-Pocket Deduction: **₹70,000** (35%)\n\nAsk me why any specific item was cut, how to dispute consumables, or speak using the mic!",
+      title: 'Claim & Bill Simulator',
+      badge: 'Bill Deductions Loaded',
+      subtitle: 'Context: ₹2,00,000 Bill • ₹70,000 Deductions (Clauses 3.1, 3.2, 7.2)',
+      initialGreeting: "Namaste! I'm your ClaimSaathi Assistant powered by **Sarvam AI**.\n\nI have loaded your **₹2,00,000 Fortis hospital bill simulation**:\n• Estimated Insurer Payout: **₹1,30,000** (65%)\n• Out-of-Pocket Deduction: **₹70,000** (35%)\n\nAsk me why any specific item was cut, how to dispute consumables, or speak using the mic!",
       quickPrompts: [
         'Why was ₹70,000 deducted from my bill?',
         'Explain Clause 3.2 proportionate deduction',
         'Can I dispute the ₹20k consumables?',
         'How to bridge ₹70k with Paytm 0% EMI?',
       ],
-      placeholder: 'Ask Sarvam AI about this claim bill or speak with mic...',
+      placeholder: 'Ask about this bill breakdown or speak...',
     },
     hi: {
-      title: 'क्लेम व बिल सिमुलेटर संदर्भ',
-      badge: '🏥 बिल कटौतियां लोड हैं',
+      title: 'क्लेम व बिल सिमुलेटर',
+      badge: 'बिल कटौतियां लोड हैं',
       subtitle: 'संदर्भ: ₹2,00,000 बिल • ₹70,000 कटौतियां (क्लॉज 3.1, 3.2, 7.2)',
-      initialGreeting: "नमस्ते! मैं सरवम AI द्वारा संचालित आपका **क्लेम साथी सहायक** हूँ।\n\nमैंने आपके **₹2,00,000 अस्पताल बिल** का सिमुलेशन लोड कर लिया है:\n• बीमा कंपनी द्वारा देय: **₹1,30,000** (65%)\n• मरीज को देय (कटौती): **₹70,000** (35%)\n\nमुझसे पूछें कि बिल में से पैसे क्यों कटे, कंज्यूमबल्स पर क्लेम कैसे करें, या माइक दबाकर बोलें!",
+      initialGreeting: "नमस्ते! मैं सरवम AI द्वारा संचालित आपका **क्लेम साथी सहायक** हूँ।\n\nमैंने आपके **₹2,00,000 अस्पताल बिल** का सिमुलेशन लोड कर लिया है:\n• बीमा कंपनी द्वारा देय: **₹1,30,000** (65%)\n• मरीज को देय (कटौती): **₹70,000** (35%)\n\nमुझसे पूछें कि बिल में से पैसे क्यों कटे, कंज्यूमबल्स पर अपील कैसे करें, या माइक से बोलें!",
       quickPrompts: [
         'मेरे बिल से ₹70,000 क्यों काटे गए?',
         'क्लॉज 3.2 समानुपातिक कटौती समझाएं',
         'क्या ₹20,000 कंज्यूमबल्स पर अपील कर सकते हैं?',
         'Paytm 0% EMI से ₹70,000 कैसे भरें?',
       ],
-      placeholder: 'सरवम AI से अपने क्लेम या बिल के बारे में पूछें या बोलें...',
+      placeholder: 'बिल और क्लेम के बारे में हिंदी में पूछें...',
     },
     hinglish: {
-      title: 'Claim & Bill Simulator Context',
-      badge: '🏥 Bill Deductions Loaded',
+      title: 'Claim & Bill Simulator',
+      badge: 'Bill Deductions Loaded',
       subtitle: 'Context: ₹2 Lakh Bill • ₹70k Deductions',
       initialGreeting: "Namaste! Main Sarvam AI powered aapka **ClaimSaathi assistant** hoon.\n\nAapka **₹2,00,000 Fortis hospital bill** breakdown ready hai:\n• Insurer Payout: **₹1,30,000** (65%)\n• You Pay (Deduction): **₹70,000** (35%)\n\nKoi bhi doubt ho jaise ₹70k kyu deduct hua ya consumables appeal kaise karein, neeche puchein ya mic dabakar bolein!",
       quickPrompts: [
@@ -117,8 +148,8 @@ const FEATURE_DATA = {
   },
   insurance: {
     en: {
-      title: 'Insurance Policy Context',
-      badge: '🛡️ Policy Limits Loaded',
+      title: 'Insurance Policy Decoder',
+      badge: 'Policy Limits Loaded',
       subtitle: 'Context: ₹5,00,000 Cover • ₹3k Room Cap • Exclusions & Network',
       initialGreeting: "Namaste! I'm your ClaimSaathi Assistant powered by **Sarvam AI**.\n\nI have the complete breakdown of your **Health Insurance Policy**:\n• Sum Insured: **₹5,00,000**\n• Room Rent Cap: **₹3,000/day** (Twin Sharing)\n• Co-Pay: **10%**\n• Empanelled: Fortis, Max, Apollo\n\nAsk me about treatment coverage, cashless admission, or room upgrade penalties!",
       quickPrompts: [
@@ -127,11 +158,11 @@ const FEATURE_DATA = {
         'Is Fortis Hospital cashless under my policy?',
         'Explain the 10% co-payment rule',
       ],
-      placeholder: 'Ask Sarvam AI about this policy or speak with mic...',
+      placeholder: 'Ask about this policy or speak...',
     },
     hi: {
-      title: 'स्वास्थ्य बीमा पॉलिसी संदर्भ',
-      badge: '🛡️ पॉलिसी शर्तें लोड हैं',
+      title: 'स्वास्थ्य बीमा पॉलिसी डिकोडर',
+      badge: 'पॉलिसी शर्तें लोड हैं',
       subtitle: 'संदर्भ: ₹5,00,000 कवर • ₹3,000 रूम सीमा • अपवाद व अस्पताल',
       initialGreeting: "नमस्ते! मैं सरवम AI द्वारा संचालित आपका **क्लेम साथी सहायक** हूँ।\n\nआपकी स्वास्थ्य बीमा पॉलिसी का विवरण लोड है:\n• सम इंश्योर्ड (बीमा राशि): **₹5,00,000**\n• रूम रेंट सीमा: **₹3,000/दिन** (ट्विन शेयरिंग)\n• को-पेमेंट: **10%**\n• कैशलेस अस्पताल: फोर्टिस, मैक्स, अपोलो\n\nउपचार कवरेज, कमरे के किराए के नियम या कैशलेस भर्ती के बारे में हिंदी में पूछें!",
       quickPrompts: [
@@ -140,11 +171,11 @@ const FEATURE_DATA = {
         'क्या फोर्टिस अस्पताल में कैशलेस इलाज मिलेगा?',
         '10% को-पेमेंट नियम क्या है?',
       ],
-      placeholder: 'सरवम AI से अपनी पॉलिसी के बारे में हिंदी में पूछें...',
+      placeholder: 'पॉलिसी के बारे में हिंदी में पूछें...',
     },
     hinglish: {
-      title: 'Insurance Policy Context',
-      badge: '🛡️ Policy Limits Loaded',
+      title: 'Insurance Policy Decoder',
+      badge: 'Policy Limits Loaded',
       subtitle: 'Context: ₹5 Lakh Cover • ₹3k Room Cap',
       initialGreeting: "Namaste! Main Sarvam AI powered aapka **ClaimSaathi assistant** hoon.\n\nAapki policy ka data loaded hai:\n• Sum Insured: **₹5,00,000**\n• Room Rent Limit: **₹3,000/day**\n• Co-Pay: **10%**\n• Cashless Hospitals: Fortis, Max, Apollo\n\nKoi bhi sawal puchein jaise room upgrade rules ya surgery coverage!",
       quickPrompts: [
@@ -158,12 +189,12 @@ const FEATURE_DATA = {
   },
   bridge: {
     en: {
-      title: 'Financial Bridge Context',
-      badge: '💳 Paytm EMI & Loans Loaded',
+      title: 'Paytm Financial Bridge',
+      badge: 'Paytm Loans Loaded',
       subtitle: 'Context: ₹70,000 Cash Gap • 0% EMI • 45-day TPA Grace',
-      initialGreeting: "Namaste! I'm your ClaimSaathi Assistant powered by **Sarvam AI**.\n\nI'm ready with your **Paytm Financial Bridge** details to cover the **₹70,000** hospital deduction:\n• **0% No-Cost EMI:** ₹23,333/month (3 mos)\n• **45-Day Advance:** ₹0 today; repay after TPA reimbursement\n• Direct disbursal to Fortis billing counter in < 2 mins\n\nHow can I help you discharge with peace of mind?",
+      initialGreeting: "Namaste! I'm your ClaimSaathi Assistant powered by **Sarvam AI**.\n\nI'm ready with your **Paytm Financial Bridge** details to cover the **₹70,000** hospital deduction:\n• **0% No-Cost EMI:** ₹23,333/month (3 mos)\n• **45-Day Advance:** ₹0 today; repay after TPA reimbursement\n• Direct disbursal to hospital billing counter in < 2 mins\n\nHow can I help you discharge with peace of mind?",
       quickPrompts: [
-        'How does the 0% No-Cost EMI work for hospital bills?',
+        'How does 0% No-Cost EMI work for hospital bills?',
         'How does 45-day TPA reimbursement bridge work?',
         'What documents are needed for approval?',
         'Can Paytm pay the hospital cashier directly?',
@@ -171,8 +202,8 @@ const FEATURE_DATA = {
       placeholder: 'Ask about Paytm 0% EMI or medical credit...',
     },
     hi: {
-      title: 'Paytm फाइनेंशियल ब्रिज संदर्भ',
-      badge: '💳 Paytm मेडिकल लोन लोड है',
+      title: 'Paytm मेडिकल लोन व EMI',
+      badge: 'Paytm लोन लोड है',
       subtitle: 'संदर्भ: ₹70,000 कैश गैप • 0% ईएमआई • 45 दिन ग्रेस',
       initialGreeting: "नमस्ते! मैं सरवम AI द्वारा संचालित आपका **क्लेम साथी सहायक** हूँ।\n\nअस्पताल के **₹70,000** के अंतर को भरने के लिए Paytm मेडिकल लोन उपलब्ध है:\n• **0% नो-कॉस्ट EMI:** ₹23,333/माह (3 महीने)\n• **45-दिन ग्रेस एडवांस:** आज ₹0 दें; TPA क्लेम मिलने पर चुकाएं\n• 2 मिनट में सीधे अस्पताल के कैशियर काउंटर पर भुगतान\n\nलोन पात्रता या डिस्चार्ज प्रक्रिया के बारे में कुछ भी पूछें!",
       quickPrompts: [
@@ -181,11 +212,11 @@ const FEATURE_DATA = {
         'लोन के लिए कौन से दस्तावेज चाहिए?',
         'क्या Paytm सीधे अस्पताल को पैसे देता है?',
       ],
-      placeholder: 'Paytm 0% ईएमआई या लोन के बारे में हिंदी में पूछें...',
+      placeholder: 'Paytm 0% ईएमआई के बारे में पूछें...',
     },
     hinglish: {
-      title: 'Financial Bridge Context',
-      badge: '💳 Paytm EMI & Loans Loaded',
+      title: 'Paytm Financial Bridge',
+      badge: 'Paytm Loans Loaded',
       subtitle: 'Context: ₹70k Cash Gap • 0% EMI',
       initialGreeting: "Namaste! Main Sarvam AI powered aapka **ClaimSaathi assistant** hoon.\n\nHospital gap ka **₹70,000** clear karne ke liye Paytm Health Bridge available hai:\n• **0% No-Cost EMI:** ₹23,333/month (3 months)\n• **45-Day Advance:** Aaj ₹0 pay karein, TPA se paisa aane par repay karein\n• Instant hospital disbursal in 2 mins\n\nKaise help kar sakta hoon aapki?",
       quickPrompts: [
@@ -200,8 +231,8 @@ const FEATURE_DATA = {
   general: {
     en: {
       title: 'ClaimSaathi AI Assistant',
-      badge: '⚡ Sarvam AI 105B',
-      subtitle: 'Expert Health Insurance & Hospital Bill Advisor',
+      badge: 'AI Assistant Active',
+      subtitle: 'Health Insurance & Hospital Bill Specialist',
       initialGreeting: "Namaste! I'm your ClaimSaathi Assistant powered by **Sarvam AI**.\n\nI can help you:\n1. Decode your health insurance policy & hidden clauses\n2. Simulate hospital bill out-of-pocket deductions\n3. Access instant zero-collateral Paytm EMI to bridge any cash gap\n\nWhat would you like to know today?",
       quickPrompts: [
         'What is proportionate room rent deduction?',
@@ -209,11 +240,11 @@ const FEATURE_DATA = {
         'Explain 0% No-Cost EMI for hospital bills',
         'What are non-payable consumables in claims?',
       ],
-      placeholder: 'Ask Sarvam AI anything or speak with mic...',
+      placeholder: 'Ask anything about policy, bills, or EMI...',
     },
     hi: {
       title: 'क्लेम साथी AI सहायक',
-      badge: '⚡ सरवम AI 105B',
+      badge: 'AI सहायक सक्रिय है',
       subtitle: 'स्वास्थ्य बीमा व अस्पताल बिल विशेषज्ञ',
       initialGreeting: "नमस्ते! मैं सरवम AI द्वारा संचालित आपका **क्लेम साथी सहायक** हूँ।\n\nमैं आपकी सहायता कर सकता हूँ:\n1. स्वास्थ्य बीमा पॉलिसी और छुपे हुए क्लॉज समझने में\n2. अस्पताल बिल में होने वाली कटौतियों का सिमुलेशन देखने में\n3. अस्पताल में बिना ब्याज 0% No-Cost EMI से तुरंत भुगतान करने में\n\nआप मुझसे हिंदी में कुछ भी पूछ सकते हैं!",
       quickPrompts: [
@@ -222,11 +253,11 @@ const FEATURE_DATA = {
         'अस्पताल बिल के लिए 0% EMI कैसे मिलती है?',
         'क्लेम में नॉन-पेयेबल कंज्यूमबल्स क्या होते हैं?',
       ],
-      placeholder: 'सरवम AI से हिंदी में पूछें या माइक से बोलें...',
+      placeholder: 'बीमा या बिल के बारे में हिंदी में पूछें...',
     },
     hinglish: {
       title: 'ClaimSaathi AI Assistant',
-      badge: '⚡ Sarvam AI 105B',
+      badge: 'AI Assistant Active',
       subtitle: 'Health Insurance & Bill Expert',
       initialGreeting: "Namaste! Main Sarvam AI powered aapka **ClaimSaathi assistant** hoon.\n\nMain aapki help kar sakta hoon:\n1. Health policy ke clauses aur room rent rules samajhne me\n2. Hospital bill me kitna cut hoga simulate karne me\n3. Paytm 0% No-Cost EMI se instant hospital payment karne me\n\nAap kya jaanna chahte hain?",
       quickPrompts: [
@@ -259,6 +290,7 @@ export default function Chatbot({ customFeature, customContext }) {
   const [speakingMessageId, setSpeakingMessageId] = useState(null)
   const [autoSpeak, setAutoSpeak] = useState(false)
   const [speechError, setSpeechError] = useState(null)
+  const [copiedId, setCopiedId] = useState(null)
 
   const messagesEndRef = useRef(null)
   const recognitionRef = useRef(null)
@@ -350,7 +382,6 @@ export default function Chatbot({ customFeature, customContext }) {
 
     stopSpeaking()
 
-    // Clean text: strip markdown characters for natural voice reading
     let cleanSpeech = text
       .replace(/[*_#`]/g, '')
       .replace(/[•\-]\s*/g, '. ')
@@ -364,9 +395,8 @@ export default function Chatbot({ customFeature, customContext }) {
     }
 
     const utterance = new SpeechSynthesisUtterance(cleanSpeech)
-
-    // Voice & Language selection
     const voices = window.speechSynthesis.getVoices() || []
+
     if (lang === 'hi') {
       utterance.lang = 'hi-IN'
       const hiVoice = voices.find((v) => v.lang && v.lang.startsWith('hi'))
@@ -385,11 +415,9 @@ export default function Chatbot({ customFeature, customContext }) {
     utterance.onstart = () => {
       setSpeakingMessageId(messageId)
     }
-
     utterance.onend = () => {
       setSpeakingMessageId(null)
     }
-
     utterance.onerror = () => {
       setSpeakingMessageId(null)
     }
@@ -415,7 +443,7 @@ export default function Chatbot({ customFeature, customContext }) {
 
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
     if (!SpeechRecognition) {
-      setSpeechError('Speech recognition is not supported in this browser. Please use Chrome or Edge.')
+      setSpeechError('Voice recognition is not supported in this browser. Please use Chrome or Edge.')
       setTimeout(() => setSpeechError(null), 4000)
       return
     }
@@ -427,7 +455,6 @@ export default function Chatbot({ customFeature, customContext }) {
       recognition.interimResults = false
       recognition.maxAlternatives = 1
 
-      // Set recognition language based on current toggle
       if (lang === 'hi') {
         recognition.lang = 'hi-IN'
       } else {
@@ -497,7 +524,7 @@ export default function Chatbot({ customFeature, customContext }) {
       const res = await client.post('/chat/', {
         message: query,
         feature: detectedFeature,
-        language: lang, // 'en' | 'hi' | 'hinglish'
+        language: lang,
         context_data: customContext || {
           total_billed: 200000,
           insurance_payable: 130000,
@@ -522,7 +549,6 @@ export default function Chatbot({ customFeature, customContext }) {
       }
       setMessages((prev) => [...prev, botReply])
 
-      // Auto-speak reply if auto-speak toggle is ON
       if (autoSpeak) {
         speakText(res.data.reply, botReplyId)
       }
@@ -565,6 +591,13 @@ export default function Chatbot({ customFeature, customContext }) {
     ])
   }
 
+  const copyToClipboard = (text, id) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedId(id)
+      setTimeout(() => setCopiedId(null), 2000)
+    })
+  }
+
   // Format markdown: bold, list items, paragraphs
   const renderMessageContent = (text) => {
     if (!text) return ''
@@ -574,13 +607,13 @@ export default function Chatbot({ customFeature, customContext }) {
       const isBullet = trimmed.startsWith('•') || trimmed.startsWith('- ')
       const cleaned = isBullet ? trimmed.replace(/^[•\-]\s*/, '') : trimmed
 
-      // Split bold chunks
       const parts = cleaned.split(/(\*\*.*?\*\*)/g)
       const parsedParts = parts.map((part, pIdx) => {
         if (part.startsWith('**') && part.endsWith('**')) {
+          const inner = part.slice(2, -2)
           return (
             <strong key={pIdx} className="saathi-bubble-strong">
-              {part.slice(2, -2)}
+              {inner}
             </strong>
           )
         }
@@ -590,14 +623,14 @@ export default function Chatbot({ customFeature, customContext }) {
       if (isBullet) {
         return (
           <div key={idx} className="saathi-bubble-bullet">
-            <span className="saathi-bullet-dot">•</span>
-            <span>{parsedParts}</span>
+            <span className="saathi-bullet-dot" />
+            <span className="saathi-bullet-text">{parsedParts}</span>
           </div>
         )
       }
 
       if (trimmed === '') {
-        return <div key={idx} style={{ height: '6px' }} />
+        return <div key={idx} className="saathi-bubble-space" />
       }
 
       return (
@@ -615,41 +648,25 @@ export default function Chatbot({ customFeature, customContext }) {
         <div className={`saathi-chat-window${isMinimized ? ' minimized' : ''}`}>
           {/* Header */}
           <div className="saathi-header">
+            {/* Left: Bot Identity */}
             <div className="saathi-header-info">
               <div className="saathi-bot-avatar">
-                <BotIcon size={22} />
+                <BotIcon size={20} />
                 <span className="saathi-avatar-dot" />
               </div>
               <div className="saathi-header-meta">
-                <div className="saathi-header-title-row">
-                  <span className="saathi-header-name">ClaimSaathi AI</span>
-                  <span className="saathi-header-powered">Sarvam AI</span>
-                </div>
-                <div className="saathi-header-context-tag">
-                  <span>●</span>
-                  <span>{localized.badge}</span>
+                <span className="saathi-header-name">ClaimSaathi AI</span>
+                <div className="saathi-header-status-row">
+                  <span className="saathi-status-pulse" />
+                  <span className="saathi-status-text">{localized.badge}</span>
                 </div>
               </div>
             </div>
 
-            {/* Header controls: Voice Toggle + Language + Minimize + Close */}
+            {/* Right: Controls (Language + Audio Icon + Minimize + Close) */}
             <div className="saathi-header-controls">
-              {/* Voice Output Auto-Play Toggle */}
-              <button
-                type="button"
-                onClick={() => {
-                  if (autoSpeak) stopSpeaking()
-                  setAutoSpeak(!autoSpeak)
-                }}
-                className={`saathi-audio-toggle-btn${autoSpeak ? ' active' : ''}`}
-                title={autoSpeak ? 'Voice Output: ON (Click to mute)' : 'Voice Output: OFF (Click to auto-read)'}
-              >
-                {autoSpeak ? <SpeakerIcon size={14} /> : <SpeakerMuteIcon size={14} />}
-                <span>{autoSpeak ? (lang === 'hi' ? 'आवाज़ ON' : 'Audio ON') : (lang === 'hi' ? 'आवाज़' : 'Audio')}</span>
-              </button>
-
               {/* Language Switcher */}
-              <div className="saathi-lang-switcher">
+              <div className="saathi-lang-switcher" role="group" aria-label="Language selection">
                 <button
                   type="button"
                   onClick={() => {
@@ -657,7 +674,7 @@ export default function Chatbot({ customFeature, customContext }) {
                     setLang('en')
                   }}
                   className={`saathi-lang-btn${lang === 'en' ? ' active' : ''}`}
-                  title="English"
+                  title="English mode"
                 >
                   EN
                 </button>
@@ -668,7 +685,7 @@ export default function Chatbot({ customFeature, customContext }) {
                     setLang('hinglish')
                   }}
                   className={`saathi-lang-btn${lang === 'hinglish' ? ' active' : ''}`}
-                  title="Hinglish"
+                  title="Hinglish mode"
                 >
                   Hin
                 </button>
@@ -685,42 +702,62 @@ export default function Chatbot({ customFeature, customContext }) {
                 </button>
               </div>
 
+              {/* Voice Output Icon Button (No Text Overflow) */}
+              <button
+                type="button"
+                onClick={() => {
+                  if (autoSpeak) stopSpeaking()
+                  setAutoSpeak(!autoSpeak)
+                }}
+                className={`saathi-icon-action-btn${autoSpeak ? ' active' : ''}`}
+                title={autoSpeak ? 'Voice Audio: ON (Click to mute)' : 'Voice Audio: OFF (Click to auto-read)'}
+                aria-label="Toggle voice readout"
+              >
+                {autoSpeak ? <SpeakerIcon size={14} /> : <SpeakerMuteIcon size={14} />}
+              </button>
+
+              {/* Minimize / Maximize Button */}
               <button
                 type="button"
                 onClick={() => setIsMinimized(!isMinimized)}
-                className="saathi-icon-btn"
-                title={isMinimized ? 'Expand' : 'Minimize'}
+                className="saathi-window-btn"
+                title={isMinimized ? 'Expand chat' : 'Minimize chat'}
+                aria-label={isMinimized ? 'Expand chat' : 'Minimize chat'}
               >
-                <MinimizeIcon size={16} />
+                {isMinimized ? <MaximizeIcon size={13} /> : <MinimizeIcon size={13} />}
               </button>
 
+              {/* Close Button */}
               <button
                 type="button"
                 onClick={() => {
                   stopSpeaking()
                   setIsOpen(false)
                 }}
-                className="saathi-icon-btn close"
+                className="saathi-window-btn close"
                 title="Close chat"
+                aria-label="Close chat"
               >
-                <CloseIcon size={16} />
+                <CloseIcon size={13} />
               </button>
             </div>
           </div>
 
           {!isMinimized && (
             <>
-              {/* Context Summary Strip */}
-              <div className="saathi-context-strip">
-                <div className="saathi-context-strip-left">
-                  <SparkleIcon size={13} color="#00BAF2" />
-                  <span>{localized.subtitle}</span>
+              {/* Context Ribbon Banner */}
+              <div className="saathi-context-ribbon">
+                <div className="saathi-context-left">
+                  <span className="saathi-sparkle-dot">
+                    <SparkleIcon size={12} color="#00BAF2" />
+                  </span>
+                  <span className="saathi-context-subtitle">{localized.subtitle}</span>
                 </div>
                 <button
                   type="button"
                   onClick={resetChat}
-                  className="saathi-context-strip-reset"
-                  title="Reset conversation"
+                  className="saathi-reset-btn"
+                  title="Start fresh conversation"
                 >
                   <RefreshIcon size={11} />
                   <span>{lang === 'hi' ? 'रीसेट' : 'Reset'}</span>
@@ -731,45 +768,76 @@ export default function Chatbot({ customFeature, customContext }) {
               <div className="saathi-messages-box">
                 {messages.map((m) => (
                   <div key={m.id} className={`saathi-message-row ${m.role}`}>
+                    {m.role === 'assistant' && (
+                      <div className="saathi-bot-label">
+                        <div className="saathi-bot-avatar-mini">
+                          <BotIcon size={11} />
+                        </div>
+                        <span className="saathi-bot-name">ClaimSaathi</span>
+                      </div>
+                    )}
+
                     <div className="saathi-bubble">
                       {renderMessageContent(m.content)}
                     </div>
+
                     <div className="saathi-message-meta">
-                      <span>{m.time}</span>
+                      <span className="saathi-meta-time">{m.time}</span>
                       {m.role === 'assistant' && (
-                        <>
-                          <span className="saathi-sarvam-source">⚡ Sarvam AI</span>
-                          {/* Voice Read Aloud Button on Bot Message */}
+                        <div className="saathi-bubble-actions">
+                          {/* Copy button */}
+                          <button
+                            type="button"
+                            onClick={() => copyToClipboard(m.content, m.id)}
+                            className="saathi-action-icon-btn"
+                            title="Copy response"
+                          >
+                            {copiedId === m.id ? <CheckIcon size={11} /> : <CopyIcon size={11} />}
+                            <span className="saathi-action-label">{copiedId === m.id ? 'Copied' : 'Copy'}</span>
+                          </button>
+
+                          {/* Voice Read Aloud Button */}
                           <button
                             type="button"
                             onClick={() => speakText(m.content, m.id)}
-                            className={`saathi-speaker-btn${speakingMessageId === m.id ? ' speaking' : ''}`}
-                            title={speakingMessageId === m.id ? 'Stop Speaking' : 'Read Aloud'}
+                            className={`saathi-action-icon-btn${speakingMessageId === m.id ? ' speaking' : ''}`}
+                            title={speakingMessageId === m.id ? 'Stop audio' : 'Read aloud'}
                           >
-                            <SpeakerIcon size={13} />
+                            <SpeakerIcon size={11} />
+                            <span className="saathi-action-label">
+                              {speakingMessageId === m.id ? 'Stop' : 'Listen'}
+                            </span>
                           </button>
-                        </>
+                        </div>
                       )}
                     </div>
                   </div>
                 ))}
 
                 {loading && (
-                  <div className="saathi-typing">
-                    <div className="saathi-typing-dots">
-                      <span className="saathi-dot" />
-                      <span className="saathi-dot" />
-                      <span className="saathi-dot" />
+                  <div className="saathi-message-row assistant">
+                    <div className="saathi-bot-label">
+                      <div className="saathi-bot-avatar-mini">
+                        <BotIcon size={11} />
+                      </div>
+                      <span className="saathi-bot-name">ClaimSaathi</span>
                     </div>
-                    <span className="saathi-typing-text">
-                      {lang === 'hi' ? 'सरवम AI सोच रहा है...' : 'Sarvam AI thinking...'}
-                    </span>
+                    <div className="saathi-typing-card">
+                      <div className="saathi-typing-dots">
+                        <span className="saathi-dot" />
+                        <span className="saathi-dot" />
+                        <span className="saathi-dot" />
+                      </div>
+                      <span className="saathi-typing-text">
+                        {lang === 'hi' ? 'विश्लेषण कर रहा है...' : 'Analyzing insurance data...'}
+                      </span>
+                    </div>
                   </div>
                 )}
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Quick Context Prompts */}
+              {/* Quick Prompt Suggestion Pills */}
               <div className="saathi-quick-prompts-bar">
                 {localized.quickPrompts.map((q, idx) => (
                   <button
@@ -778,15 +846,15 @@ export default function Chatbot({ customFeature, customContext }) {
                     onClick={() => handleSend(q)}
                     className="saathi-chip-btn"
                   >
-                    <span style={{ color: '#00BAF2' }}>⚡</span>
-                    <span>{q}</span>
+                    <span className="saathi-chip-icon">⚡</span>
+                    <span className="saathi-chip-text">{q}</span>
                   </button>
                 ))}
               </div>
 
-              {/* Input Area with Microphone Voice Input */}
+              {/* Input Area with Voice Support */}
               <div className="saathi-input-bar">
-                {/* Active Listening Animated Bar */}
+                {/* Active Listening Equalizer Banner */}
                 {isListening && (
                   <div className="saathi-voice-listening-bar">
                     <div className="saathi-voice-listening-left">
@@ -795,10 +863,11 @@ export default function Chatbot({ customFeature, customContext }) {
                         <span className="saathi-wave-bar" />
                         <span className="saathi-wave-bar" />
                         <span className="saathi-wave-bar" />
+                        <span className="saathi-wave-bar" />
                       </div>
-                      <span>
+                      <span className="saathi-voice-label">
                         {lang === 'hi'
-                          ? 'सुन रहे हैं... कृपया हिंदी में बोलें'
+                          ? 'सुन रहे हैं... कृपया बोलें'
                           : 'Listening... Speak now'}
                       </span>
                     </div>
@@ -812,20 +881,10 @@ export default function Chatbot({ customFeature, customContext }) {
                   </div>
                 )}
 
-                {/* Speech Error Banner if any */}
+                {/* Speech Error Notice */}
                 {speechError && (
-                  <div
-                    style={{
-                      background: '#FEF2F2',
-                      color: '#DC2626',
-                      border: '1px solid #FECDD3',
-                      fontSize: '11px',
-                      padding: '5px 10px',
-                      borderRadius: '8px',
-                      marginBottom: '6px',
-                    }}
-                  >
-                    {speechError}
+                  <div className="saathi-speech-error-box">
+                    <span>{speechError}</span>
                   </div>
                 )}
 
@@ -834,7 +893,7 @@ export default function Chatbot({ customFeature, customContext }) {
                     type="text"
                     placeholder={
                       isListening
-                        ? lang === 'hi' ? 'आपकी आवाज़ सुन रहे हैं...' : 'Listening to your voice...'
+                        ? lang === 'hi' ? 'आपकी आवाज़ रिकॉर्ड हो रही है...' : 'Listening to voice...'
                         : localized.placeholder
                     }
                     value={input}
@@ -843,20 +902,21 @@ export default function Chatbot({ customFeature, customContext }) {
                     className="saathi-input-field"
                   />
 
-                  {/* Voice Microphone Input Button */}
+                  {/* Microphone Voice Input */}
                   <button
                     type="button"
                     onClick={toggleListening}
                     className={`saathi-mic-btn${isListening ? ' listening' : ''}`}
                     title={
                       isListening
-                        ? 'Stop Listening'
+                        ? 'Stop Recording'
                         : lang === 'hi'
-                        ? 'माइक से हिंदी में बोलें'
-                        : 'Click to Speak (Voice Input)'
+                        ? 'माइक से बोलें'
+                        : 'Voice Input (Click to speak)'
                     }
+                    aria-label="Voice input"
                   >
-                    <MicIcon size={17} />
+                    <MicIcon size={16} />
                   </button>
 
                   {/* Send Button */}
@@ -865,15 +925,19 @@ export default function Chatbot({ customFeature, customContext }) {
                     onClick={() => handleSend()}
                     disabled={!input.trim() || loading}
                     className="saathi-send-btn"
-                    title={lang === 'hi' ? 'संदेश भेजें' : 'Send message'}
+                    title={lang === 'hi' ? 'भेजें' : 'Send message'}
+                    aria-label="Send message"
                   >
-                    <SendIcon size={16} />
+                    <SendIcon size={15} />
                   </button>
                 </div>
 
-                <div className="saathi-input-subtext">
-                  <span>Powered by Sarvam AI (sarvam-105b) • Voice &amp; Hindi Enabled</span>
-                  <span className="saathi-confidential-tag">100% Confidential</span>
+                <div className="saathi-input-footer">
+                  <div className="saathi-footer-security">
+                    <ShieldCheckIcon size={12} />
+                    <span>256-Bit Encrypted • Powered by Sarvam AI</span>
+                  </div>
+                  <span className="saathi-footer-tag">100% Private</span>
                 </div>
               </div>
             </>
@@ -881,7 +945,7 @@ export default function Chatbot({ customFeature, customContext }) {
         </div>
       )}
 
-      {/* ── FLOATING LAUNCHER BUTTON ── */}
+      {/* ── FLOATING LAUNCHER BUTTON (WHEN CLOSED) ── */}
       {!isOpen && (
         <button
           type="button"
@@ -890,19 +954,23 @@ export default function Chatbot({ customFeature, customContext }) {
             setIsMinimized(false)
           }}
           className="saathi-chat-launcher"
+          aria-label="Open ClaimSaathi AI Assistant"
         >
-          <span className="saathi-launcher-pulse" />
-          <div className="saathi-launcher-icon">
-            <SparkleIcon size={19} color="#FFFFFF" />
+          <div className="saathi-launcher-avatar">
+            <BotIcon size={20} />
+            <span className="saathi-launcher-online-dot" />
           </div>
           <div className="saathi-launcher-texts">
-            <div className="saathi-launcher-title">
-              <span>Ask Saathi AI</span>
-              <span className="saathi-launcher-sarvam-tag">Voice &amp; AI</span>
+            <div className="saathi-launcher-title-row">
+              <span className="saathi-launcher-title">Ask Saathi AI</span>
+              <span className="saathi-launcher-tag">Multilingual</span>
             </div>
-            <div className="saathi-launcher-subtitle">
+            <div className="saathi-launcher-desc">
               {localized.badge}
             </div>
+          </div>
+          <div className="saathi-launcher-sparkle">
+            <SparkleIcon size={14} color="#00BAF2" />
           </div>
         </button>
       )}
