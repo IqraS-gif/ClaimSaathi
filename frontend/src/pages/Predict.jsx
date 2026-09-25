@@ -12,12 +12,73 @@ const ROOM_CATS = [
   { value: 'icu',          label: 'ICU',                 sub: 'Intensive care unit' },
 ]
 
+const DEMO_PRESETS = [
+  {
+    id: 'apollo',
+    badge: '🏥 Apollo Hospitals',
+    title: 'General Surgery • Appendicitis',
+    desc: 'Apollo Hospitals Delhi | ₹2,50,000 Est. Bill | ₹5L SI (10% Co-pay)',
+    data: {
+      hospital_name: 'Apollo Hospitals, Delhi',
+      city: 'Delhi',
+      treatment_type: 'General Surgery',
+      diagnosis: 'Acute Appendicitis (Laparoscopic)',
+      room_category: 'private',
+      estimated_bill: '250000',
+      admission_type: 'planned',
+      policy_number: 'STAR-COMP-2026-8812',
+      sum_insured: '500000',
+      co_pay_percent: '10',
+      room_rent_limit: '₹3,000/day',
+    },
+  },
+  {
+    id: 'fortis',
+    badge: '🦴 Fortis Healthcare',
+    title: 'Orthopaedic • Knee Replacement',
+    desc: 'Fortis Gurugram | ₹4,20,000 Est. Bill | ₹10L SI (0% Co-pay)',
+    data: {
+      hospital_name: 'Fortis Memorial Research Institute, Gurugram',
+      city: 'Gurugram',
+      treatment_type: 'Orthopaedic Surgery',
+      diagnosis: 'Total Knee Replacement (Bilateral)',
+      room_category: 'semi_private',
+      estimated_bill: '420000',
+      admission_type: 'planned',
+      policy_number: 'HDFC-ERGO-OPTI-9031',
+      sum_insured: '1000000',
+      co_pay_percent: '0',
+      room_rent_limit: '1% of Sum Insured',
+    },
+  },
+  {
+    id: 'max',
+    badge: '❤️ Max Healthcare',
+    title: 'Cardiac • Angioplasty (Emergency)',
+    desc: 'Max Saket Delhi | ₹3,80,000 Est. Bill | ₹5L SI (Single Private Room)',
+    data: {
+      hospital_name: 'Max Super Speciality Hospital, Saket',
+      city: 'Delhi',
+      treatment_type: 'Cardiac Surgery',
+      diagnosis: 'Coronary Angioplasty with Stenting',
+      room_category: 'private',
+      estimated_bill: '380000',
+      admission_type: 'emergency',
+      policy_number: 'NIVA-REASSURE-5521',
+      sum_insured: '500000',
+      co_pay_percent: '0',
+      room_rent_limit: 'Single Private Room',
+    },
+  },
+]
+
 const fmt = (n) => `₹${Number(n).toLocaleString('en-IN', { maximumFractionDigits: 0 })}`
 
 export default function Predict() {
   const navigate = useNavigate()
-  const [step,   setStep]   = useState(1)
-  const [form,   setForm]   = useState({
+  const [step,         setStep]         = useState(1)
+  const [selectedDemo, setSelectedDemo] = useState(null)
+  const [form,         setForm]         = useState({
     hospital_name: '', city: '', treatment_type: '', diagnosis: '',
     room_category: 'private', estimated_bill: '', admission_type: 'planned',
     policy_number: '', sum_insured: '', co_pay_percent: '0', room_rent_limit: '',
@@ -27,6 +88,13 @@ export default function Predict() {
   const [error,   setError]   = useState(null)
 
   const set = (k) => (e) => setForm(p => ({ ...p, [k]: e.target.value }))
+
+  const handleAutoFillDemo = (presetIndex = 0) => {
+    const preset = DEMO_PRESETS[presetIndex] || DEMO_PRESETS[0]
+    setForm(preset.data)
+    setSelectedDemo(preset.id)
+    setError(null)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -70,10 +138,56 @@ export default function Predict() {
       <div className="predict-page-container">
         <div className="predict-page-main">
 
+          {/* Quick Demo Auto-Fill Banner */}
+          {step < 3 && (
+            <div className="predict-demo-banner">
+              <div className="predict-demo-header">
+                <div className="predict-demo-text">
+                  <span className="demo-badge-icon">⚡</span>
+                  <span>
+                    Testing or exploring? Click for 1-tap auto-fill of hospital, treatment &amp; policy details:
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  className="demo-upload-pill-btn"
+                  onClick={() => handleAutoFillDemo(0)}
+                  title="Auto-fill default demo case (Apollo Hospitals, Delhi)"
+                >
+                  <span className="demo-badge-icon">⚡</span>
+                  <span>Auto-Fill Demo Details</span>
+                </button>
+              </div>
+
+              <div className="predict-demo-chips">
+                <span className="predict-demo-chip-label">Sample Cases:</span>
+                {DEMO_PRESETS.map((p, idx) => (
+                  <button
+                    key={p.id}
+                    type="button"
+                    className={`predict-demo-chip${selectedDemo === p.id ? ' active' : ''}`}
+                    onClick={() => handleAutoFillDemo(idx)}
+                    title={p.desc}
+                  >
+                    <span>{p.badge}</span>
+                    <span style={{ opacity: 0.85 }}>({p.title.split('•')[1]?.trim() || p.title})</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* STEP 1 — Hospital info */}
           {step === 1 && (
             <div className="card">
-              <div className="card-title">Hospital &amp; Treatment Details</div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                <div className="card-title" style={{ margin: 0 }}>Hospital &amp; Treatment Details</div>
+                {selectedDemo && (
+                  <span className="demo-filled-badge">
+                    <span>⚡ Demo Loaded</span>
+                  </span>
+                )}
+              </div>
 
               <div className="form-row">
                 <div className="form-group">
@@ -156,7 +270,14 @@ export default function Predict() {
           {/* STEP 2 — Policy details */}
           {step === 2 && (
             <div className="card">
-              <div className="card-title">Your Policy Details</div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                <div className="card-title" style={{ margin: 0 }}>Your Policy Details</div>
+                {selectedDemo && (
+                  <span className="demo-filled-badge">
+                    <span>⚡ Demo Loaded</span>
+                  </span>
+                )}
+              </div>
 
               <div className="alert-box info" style={{ marginBottom: '20px' }}>
                 <svg className="alert-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
@@ -276,7 +397,7 @@ export default function Predict() {
               )}
 
               <div className="form-actions">
-                <button className="btn btn-ghost" onClick={() => { setStep(1); setResult(null) }}>New Prediction</button>
+                <button className="btn btn-ghost" onClick={() => { setStep(1); setResult(null); setSelectedDemo(null) }}>New Prediction</button>
                 <div className="form-actions-right">
                   <button className="btn btn-outline" onClick={() => navigate('/claim')}>Prepare Claim &#8594;</button>
                   {cb.out_of_pocket > 50000 && (

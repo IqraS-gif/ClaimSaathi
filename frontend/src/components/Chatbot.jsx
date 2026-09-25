@@ -330,7 +330,7 @@ export default function Chatbot({ customFeature, customContext }) {
     }
   }, [messages, isOpen, isMinimized, loading])
 
-  // Listen for global open events from any page
+  // Listen for global open/close events from any page
   useEffect(() => {
     const handleGlobalOpen = (e) => {
       setIsOpen(true)
@@ -341,8 +341,18 @@ export default function Chatbot({ customFeature, customContext }) {
         }, 120)
       }
     }
+    const handleGlobalClose = () => {
+      setIsOpen(false)
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel()
+      }
+    }
     window.addEventListener('open-saathi-chat', handleGlobalOpen)
-    return () => window.removeEventListener('open-saathi-chat', handleGlobalOpen)
+    window.addEventListener('close-saathi-chat', handleGlobalClose)
+    return () => {
+      window.removeEventListener('open-saathi-chat', handleGlobalOpen)
+      window.removeEventListener('close-saathi-chat', handleGlobalClose)
+    }
   }, [detectedFeature, lang, messages])
 
   // Stop speech synthesis when closing or unmounting
