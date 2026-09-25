@@ -87,6 +87,16 @@ export default function Navbar() {
           </li>
 
           <li
+            className="paytm-nav-item mobile-demo-pill"
+            onClick={() => navigate('/mobile')}
+            title="Try Paytm Mobile Experience"
+            style={{ background: 'linear-gradient(135deg, rgba(0,186,242,0.12), rgba(99,102,241,0.1))', border: '1.5px solid rgba(0,186,242,0.3)', borderRadius: '99px', padding: '5px 12px', gap: '5px' }}
+          >
+            <span style={{ fontSize: '13px' }}>📱</span>
+            <span>Mobile View</span>
+          </li>
+
+          <li
             className="paytm-nav-item saathi-ai-pill"
             onClick={() => window.dispatchEvent(new CustomEvent('open-saathi-chat', { detail: {} }))}
             title="Chat with Sarvam AI"

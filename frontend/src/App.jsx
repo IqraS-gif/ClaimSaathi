@@ -5,7 +5,8 @@ import Landing  from './pages/Landing'
 import Upload   from './pages/Upload'
 import Predict  from './pages/Predict'
 import Claim    from './pages/Claim'
-import Bridge   from './pages/Bridge'
+import Bridge        from './pages/Bridge'
+import PaytmMobile  from './pages/PaytmMobile'
 import Chatbot  from './components/Chatbot'
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/claim"            element={<Claim />} />
         <Route path="/check-claim"      element={<Claim />} />
         <Route path="/bridge"           element={<Bridge />} />
+        <Route path="/mobile"           element={<PaytmMobile />} />
       </Routes>
       <Footer />
       {/* Dynamic Context-Aware Sarvam AI Chatbot */}

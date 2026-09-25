@@ -122,6 +122,28 @@ export default function Landing() {
                 Check Claim (Bill) <span>→</span>
               </button>
             </div>
+
+            {/* Mobile experience CTA */}
+            <div style={{ marginTop: '16px' }}>
+              <button
+                onClick={() => navigate('/mobile')}
+                style={{
+                  background: 'linear-gradient(135deg, rgba(0,186,242,0.08), rgba(99,102,241,0.06))',
+                  color: '#00BAF2',
+                  border: '1.5px solid rgba(0,186,242,0.35)',
+                  fontSize: '13px', fontWeight: 600, padding: '9px 20px',
+                  borderRadius: '9999px', cursor: 'pointer',
+                  display: 'inline-flex', alignItems: 'center', gap: '7px',
+                  transition: 'all 0.2s ease',
+                  fontFamily: 'inherit',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,186,242,0.15)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg, rgba(0,186,242,0.08), rgba(99,102,241,0.06))'; e.currentTarget.style.transform = 'translateY(0)' }}
+              >
+                <span>📱</span>
+                Try Paytm Mobile Experience →
+              </button>
+            </div>
           </div>
 
           {/* RIGHT: Visual */}
