@@ -1,41 +1,20 @@
 import { useNavigate } from 'react-router-dom'
 
-// Crisp Vector SVG Icons
-const ShieldCheckIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="#00BAF2">
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-  </svg>
-)
-
 const CheckIcon = ({ color = '#16a34a', size = 13 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
     <polyline points="20 6 9 17 4 12" />
   </svg>
 )
 
-const CrossIcon = ({ color = '#dc2626', size = 13 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="18" y1="6" x2="6" y2="18" />
-    <line x1="6" y1="6" x2="18" y2="18" />
+const CrossIcon = ({ size = 13 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
   </svg>
 )
 
 const ChevronRight = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <polyline points="9 18 15 12 9 6" />
-  </svg>
-)
-
-const BoltIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="#00BAF2">
-    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-  </svg>
-)
-
-const DocIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00BAF2" strokeWidth="2.3">
-    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-    <polyline points="14 2 14 8 20 8" />
   </svg>
 )
 
@@ -43,392 +22,378 @@ export default function Landing() {
   const navigate = useNavigate()
 
   return (
-    <div className="landing-page-wrapper">
-      {/* ── BREADCRUMB ── */}
-      <div className="landing-breadcrumb-container">
-        <span className="crumb-link" onClick={() => navigate('/')}>Home</span>
-        <span className="crumb-sep">&gt;</span>
-        <span className="crumb-link" onClick={() => navigate('/upload')}>Insurance</span>
-        <span className="crumb-sep">&gt;</span>
-        <span className="crumb-current">ClaimSaathi</span>
-      </div>
+    <div style={{ background: '#fff', minHeight: '100vh', paddingTop: '72px' }}>
 
-      {/* ── HERO SECTION MATCHING EXACT SCREENSHOT ── */}
-      <section className="landing-hero-section">
-        <div className="landing-hero-container">
-          {/* Left Column: Headline, subtext & CTA buttons */}
-          <div className="landing-hero-left">
-            {/* Pill Badge */}
-            <div className="claimsaathi-hero-badge">
-              <div className="badge-shield-circle">
+      {/* ── HERO ── */}
+      <section style={{ maxWidth: '1240px', margin: '0 auto', padding: '32px 32px 80px' }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1.1fr',
+          gap: '48px',
+          alignItems: 'center',
+        }}>
+
+          {/* LEFT: Text */}
+          <div>
+            {/* Brand pill badge */}
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: '#E8F7FE',
+              border: '1.5px solid #BAE6FD',
+              borderRadius: '9999px',
+              padding: '5px 14px 5px 6px',
+              marginBottom: '28px',
+            }}>
+              <div style={{
+                width: '22px', height: '22px', borderRadius: '50%',
+                background: '#fff', display: 'flex', alignItems: 'center',
+                justifyContent: 'center', boxShadow: '0 1px 3px rgba(0,186,242,0.2)',
+              }}>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="#00BAF2">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
               </div>
-              <span className="badge-title">ClaimSaathi</span>
-              <span className="badge-divider">|</span>
-              <span className="badge-sub">Powered by Paytm Insurance</span>
+              <span style={{ fontSize: '12.5px', fontWeight: 800, color: '#002970' }}>ClaimSaathi</span>
+              <span style={{ color: '#93c5fd', fontSize: '12px' }}>|</span>
+              <span style={{ fontSize: '12px', fontWeight: 600, color: '#475569' }}>Powered by Paytm Insurance</span>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="landing-hero-heading">
+            {/* Headline */}
+            <h1 style={{
+              fontSize: 'clamp(40px, 5vw, 62px)',
+              fontWeight: 900,
+              lineHeight: 1.04,
+              letterSpacing: '-1.5px',
+              color: '#0A1628',
+              textTransform: 'uppercase',
+              margin: '0 0 22px',
+            }}>
               YOUR HEALTH<br />
               INSURANCE,<br />
-              <span className="heading-highlight-cyan">SIMPLIFIED.</span>
+              <span style={{ color: '#00BAF2' }}>SIMPLIFIED.</span>
             </h1>
 
             {/* Subtitle */}
-            <p className="landing-hero-paragraph">
+            <p style={{
+              fontSize: '15.5px',
+              lineHeight: 1.65,
+              color: '#475569',
+              maxWidth: '460px',
+              margin: '0 0 36px',
+            }}>
               Upload your policy, check your hospital bill, know what insurance will pay and what you may have to pay — all in one place with ClaimSaathi.
             </p>
 
-            {/* Action Buttons */}
-            <div className="landing-hero-buttons">
+            {/* CTA Buttons */}
+            <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
               <button
-                type="button"
-                className="hero-cyan-pill-btn"
                 onClick={() => navigate('/upload')}
+                style={{
+                  background: '#00BAF2', color: '#fff', border: 'none',
+                  fontSize: '15px', fontWeight: 700, padding: '13px 28px',
+                  borderRadius: '9999px', cursor: 'pointer',
+                  display: 'inline-flex', alignItems: 'center', gap: '8px',
+                  boxShadow: '0 6px 20px -2px rgba(0,186,242,0.4)',
+                  transition: 'all 0.2s ease',
+                  fontFamily: 'inherit',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = '#009ad0'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = '#00BAF2'; e.currentTarget.style.transform = 'translateY(0)' }}
               >
-                <span>Check Insurance</span>
-                <span className="btn-arrow">&rarr;</span>
+                Check Insurance <span>→</span>
               </button>
 
               <button
-                type="button"
-                className="hero-outline-pill-btn"
                 onClick={() => navigate('/claim')}
+                style={{
+                  background: '#fff', color: '#00BAF2',
+                  border: '2px solid #00BAF2',
+                  fontSize: '15px', fontWeight: 700, padding: '11px 26px',
+                  borderRadius: '9999px', cursor: 'pointer',
+                  display: 'inline-flex', alignItems: 'center', gap: '8px',
+                  transition: 'all 0.2s ease',
+                  fontFamily: 'inherit',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = '#f0f9ff'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.transform = 'translateY(0)' }}
               >
-                <span>Check Claim (Bill)</span>
-                <span className="btn-arrow">&rarr;</span>
+                Check Claim (Bill) <span>→</span>
               </button>
             </div>
           </div>
 
-          {/* Right Column: Visual Mockup with iPhone & Floating Cards */}
-          <div className="landing-hero-right">
-            <div className="landing-visual-backdrop">
-              {/* Left Floating Pill Badges */}
-              <div className="floating-left-badge faster-claims">
-                <div className="badge-icon-wrap cyan-bg">
-                  <BoltIcon />
+          {/* RIGHT: Visual */}
+          <div style={{ position: 'relative', width: '100%' }}>
+            {/* Soft backdrop card */}
+            <div style={{
+              background: 'linear-gradient(140deg, #EEF6FD 0%, #E2F0FB 100%)',
+              borderRadius: '32px',
+              padding: '40px 24px',
+              position: 'relative',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              minHeight: '520px',
+            }}>
+
+              {/* Left floating badges */}
+              <div style={{
+                position: 'absolute', top: '200px', left: '-8px',
+                background: '#fff', border: '1px solid #E2E8F0',
+                borderRadius: '9999px', padding: '8px 16px 8px 8px',
+                display: 'flex', alignItems: 'center', gap: '8px',
+                boxShadow: '0 8px 24px -4px rgba(0,41,112,0.14)',
+                fontSize: '12px', fontWeight: 700, color: '#0F172A', zIndex: 5,
+              }}>
+                <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#E0F4FE', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="#00BAF2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
                 </div>
-                <span>Faster Claims</span>
+                Faster Claims
               </div>
 
-              <div className="floating-left-badge clearer-coverage">
-                <div className="badge-icon-wrap cyan-bg">
-                  <DocIcon />
+              <div style={{
+                position: 'absolute', top: '300px', left: '-8px',
+                background: '#fff', border: '1px solid #E2E8F0',
+                borderRadius: '9999px', padding: '8px 16px 8px 8px',
+                display: 'flex', alignItems: 'center', gap: '8px',
+                boxShadow: '0 8px 24px -4px rgba(0,41,112,0.14)',
+                fontSize: '12px', fontWeight: 700, color: '#0F172A', zIndex: 5,
+              }}>
+                <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#E0F4FE', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00BAF2" strokeWidth="2.3">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" />
+                  </svg>
                 </div>
-                <span>Clearer Coverage</span>
+                Clearer Coverage
               </div>
 
-              {/* iPhone Mockup Frame */}
-              <div className="landing-iphone-mockup">
-                {/* Notch / Dynamic Island */}
-                <div className="iphone-notch-bar">
-                  <span className="iphone-time">9:41</span>
-                  <div className="iphone-island" />
-                  <div className="iphone-status-icons">
-                    <svg width="14" height="10" viewBox="0 0 24 18" fill="#1e293b">
-                      <rect x="1" y="2" width="4" height="14" rx="1" />
-                      <rect x="7" y="5" width="4" height="11" rx="1" />
-                      <rect x="13" y="8" width="4" height="8" rx="1" />
-                      <rect x="19" y="11" width="4" height="5" rx="1" />
-                    </svg>
-                  </div>
+              {/* iPhone Mockup */}
+              <div style={{
+                width: '240px', height: '480px',
+                background: '#fff',
+                borderRadius: '38px',
+                border: '8px solid #1E293B',
+                boxShadow: '0 24px 56px -10px rgba(0,41,112,0.22), 0 8px 20px -4px rgba(0,0,0,0.1)',
+                overflow: 'hidden',
+                display: 'flex', flexDirection: 'column',
+                zIndex: 2, position: 'relative',
+              }}>
+                {/* Notch */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 14px 4px', background: '#fff' }}>
+                  <span style={{ fontSize: '10px', fontWeight: 700, color: '#1E293B' }}>9:41</span>
+                  <div style={{ width: '50px', height: '14px', background: '#0F172A', borderRadius: '12px' }} />
+                  <svg width="14" height="10" viewBox="0 0 24 18" fill="#1e293b">
+                    <rect x="1" y="2" width="4" height="14" rx="1" />
+                    <rect x="7" y="5" width="4" height="11" rx="1" />
+                    <rect x="13" y="8" width="4" height="8" rx="1" />
+                    <rect x="19" y="11" width="4" height="5" rx="1" />
+                  </svg>
                 </div>
 
-                {/* Inner Screen Content */}
-                <div className="iphone-screen-content">
-                  {/* Phone Header */}
-                  <div className="iphone-app-header">
-                    <div className="iphone-paytm-brand">
-                      <span className="paytm-dark">pay</span>
-                      <span className="paytm-cyan">tm</span>
+                {/* Screen */}
+                <div style={{ padding: '8px 14px 14px', display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between' }}>
+                  {/* App Header */}
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '15px', fontWeight: 900, marginBottom: '2px' }}>
+                      <span style={{ color: '#002970' }}>pay</span><span style={{ color: '#00BAF2' }}>tm</span>
                     </div>
-
-                    <div className="iphone-saathi-identity">
-                      <ShieldCheckIcon />
-                      <span className="iphone-saathi-name">ClaimSaathi</span>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', marginBottom: '2px' }}>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="#00BAF2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+                      <span style={{ fontSize: '12px', fontWeight: 800, color: '#002970' }}>ClaimSaathi</span>
                     </div>
-
-                    <p className="iphone-saathi-tagline">
+                    <p style={{ fontSize: '8.5px', color: '#64748B', margin: '0 auto 10px', maxWidth: '160px', lineHeight: 1.3 }}>
                       Your personal guide for health insurance claims
                     </p>
                   </div>
 
-                  {/* 4 Feature Menu Tiles inside screen */}
-                  <div className="iphone-tiles-group">
-                    <div
-                      className="iphone-tile-row"
-                      onClick={() => navigate('/upload')}
-                      title="Upload Insurance Policy"
-                    >
-                      <div className="tile-icon-box">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00BAF2" strokeWidth="2.3">
-                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                          <polyline points="14 2 14 8 20 8" />
-                        </svg>
+                  {/* Tile Rows */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    {[
+                      { icon: <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00BAF2" strokeWidth="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>, label: 'Upload Insurance Policy', page: '/upload' },
+                      { icon: <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#002970" strokeWidth="2.3"><path d="M3 21h18"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/><line x1="9" y1="9" x2="15" y2="9"/></svg>, label: 'Upload Hospital Bill', page: '/claim' },
+                      { icon: <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.3"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>, label: 'View Claim Summary', page: '/claim' },
+                      { icon: <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9333ea" strokeWidth="2.3"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>, label: 'Explore Financial Support', page: '/bridge' },
+                    ].map(({ icon, label, page }) => (
+                      <div key={label} onClick={() => navigate(page)} style={{
+                        background: '#F8FAFC', border: '1px solid #E2E8F0',
+                        borderRadius: '9px', padding: '7px 9px',
+                        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                        cursor: 'pointer',
+                      }}>
+                        <div style={{ width: '20px', height: '20px', borderRadius: '5px', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', flexShrink: 0 }}>
+                          {icon}
+                        </div>
+                        <span style={{ fontSize: '9px', fontWeight: 700, color: '#1E293B', marginLeft: '5px', flex: 1 }}>{label}</span>
+                        <ChevronRight />
                       </div>
-                      <span className="tile-label">Upload Insurance Policy</span>
-                      <ChevronRight />
-                    </div>
-
-                    <div
-                      className="iphone-tile-row"
-                      onClick={() => navigate('/claim')}
-                      title="Upload Hospital Bill"
-                    >
-                      <div className="tile-icon-box">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#002970" strokeWidth="2.3">
-                          <path d="M3 21h18" />
-                          <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16" />
-                          <line x1="9" y1="9" x2="15" y2="9" />
-                        </svg>
-                      </div>
-                      <span className="tile-label">Upload Hospital Bill</span>
-                      <ChevronRight />
-                    </div>
-
-                    <div
-                      className="iphone-tile-row"
-                      onClick={() => navigate('/claim')}
-                      title="View Claim Summary"
-                    >
-                      <div className="tile-icon-box">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.3">
-                          <circle cx="12" cy="12" r="10" />
-                          <polyline points="12 6 12 12 16 14" />
-                        </svg>
-                      </div>
-                      <span className="tile-label">View Claim Summary</span>
-                      <ChevronRight />
-                    </div>
-
-                    <div
-                      className="iphone-tile-row"
-                      onClick={() => navigate('/bridge')}
-                      title="Explore Financial Support"
-                    >
-                      <div className="tile-icon-box">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" strokeWidth="2.3">
-                          <rect x="2" y="5" width="20" height="14" rx="2" />
-                          <line x1="2" y1="10" x2="22" y2="10" />
-                        </svg>
-                      </div>
-                      <span className="tile-label">Explore Financial Support</span>
-                      <ChevronRight />
-                    </div>
+                    ))}
                   </div>
 
-                  {/* Bottom Pill inside phone */}
-                  <div
-                    className="iphone-bottom-support-pill"
-                    onClick={() => navigate('/bridge')}
-                  >
-                    <div className="support-currency-icon">₹</div>
-                    <div className="support-text-wrap">
-                      <span className="support-title">Financial Support</span>
-                      <span className="support-sub">with Paytm EMI</span>
-                    </div>
+                  {/* Bottom pill */}
+                  <div onClick={() => navigate('/bridge')} style={{
+                    background: '#fff', border: '1px solid #E2E8F0',
+                    borderRadius: '9px', padding: '6px 8px',
+                    display: 'flex', alignItems: 'center', gap: '6px',
+                    cursor: 'pointer', boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
+                  }}>
+                    <div style={{ width: '18px', height: '18px', borderRadius: '50%', background: '#EDE9FE', color: '#7C3AED', fontSize: '10px', fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>₹</div>
+                    <span style={{ fontSize: '9px', fontWeight: 700, color: '#0F172A' }}>Financial Support</span>
+                    <span style={{ fontSize: '8px', color: '#64748B' }}>with Paytm EMI</span>
                   </div>
                 </div>
               </div>
 
-              {/* ── FLOATING CARD 1: Policy Analysis (Top Right) ── */}
-              <div className="floating-card-mockup policy-analysis-card">
-                <div className="floating-card-header">
-                  <div className="card-head-left">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00BAF2" strokeWidth="2.4">
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                      <polyline points="14 2 14 8 20 8" />
-                    </svg>
-                    <span className="card-head-title">Policy Analysis</span>
+              {/* Floating Card 1: Policy Analysis */}
+              <div style={{
+                position: 'absolute', top: '28px', right: '-20px',
+                background: '#fff', borderRadius: '16px',
+                border: '1px solid #E2E8F0',
+                padding: '14px 16px',
+                boxShadow: '0 14px 32px -6px rgba(0,41,112,0.16), 0 4px 12px rgba(0,0,0,0.05)',
+                width: '222px', zIndex: 10,
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', paddingBottom: '8px', borderBottom: '1px solid #F1F5F9' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00BAF2" strokeWidth="2.4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <span style={{ fontSize: '12px', fontWeight: 800, color: '#0F172A' }}>Policy Analysis</span>
                   </div>
-                  <span className="completed-tag green">COMPLETED</span>
+                  <span style={{ background: '#DCFCE7', color: '#15803D', fontSize: '9px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px' }}>COMPLETED</span>
                 </div>
-
-                <div className="floating-card-items-list">
-                  <div className="analysis-row">
-                    <div className="row-left">
-                      <CheckIcon />
-                      <span>Room Rent Limit</span>
+                {[
+                  { label: 'Room Rent Limit', ok: true },
+                  { label: 'ICU Charges', ok: true },
+                  { label: 'Pre-Post Hospitalisation', ok: true },
+                  { label: 'Non-Payable Items', ok: false, badge: '2 found' },
+                ].map(({ label, ok, badge }) => (
+                  <div key={label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px', fontSize: '11px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#334155', fontWeight: 600 }}>
+                      {ok ? <CheckIcon /> : <CrossIcon />}
+                      {label}
                     </div>
-                    <span className="row-status green">Covered</span>
+                    {ok
+                      ? <span style={{ color: '#15803D', fontWeight: 700 }}>Covered</span>
+                      : <span style={{ background: '#FEE2E2', color: '#DC2626', fontSize: '9.5px', fontWeight: 800, padding: '1px 6px', borderRadius: '4px' }}>{badge}</span>
+                    }
                   </div>
-
-                  <div className="analysis-row">
-                    <div className="row-left">
-                      <CheckIcon />
-                      <span>ICU Charges</span>
-                    </div>
-                    <span className="row-status green">Covered</span>
-                  </div>
-
-                  <div className="analysis-row">
-                    <div className="row-left">
-                      <CheckIcon />
-                      <span>Pre-Post Hospitalisation</span>
-                    </div>
-                    <span className="row-status green">Covered</span>
-                  </div>
-
-                  <div className="analysis-row">
-                    <div className="row-left">
-                      <CrossIcon />
-                      <span>Non-Payable Items</span>
-                    </div>
-                    <span className="badge-found red">2 found</span>
-                  </div>
-                </div>
+                ))}
               </div>
 
-              {/* ── FLOATING CARD 2: Hospital Bill Analysis (Bottom Right) ── */}
-              <div className="floating-card-mockup bill-analysis-card">
-                <div className="floating-card-header">
-                  <div className="card-head-left">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.4">
-                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                      <polyline points="9 12 11 14 15 10" />
-                    </svg>
-                    <span className="card-head-title">Hospital Bill Analysis</span>
+              {/* Floating Card 2: Hospital Bill Analysis */}
+              <div style={{
+                position: 'absolute', bottom: '32px', right: '-20px',
+                background: '#fff', borderRadius: '16px',
+                border: '1px solid #E2E8F0',
+                padding: '14px 16px',
+                boxShadow: '0 14px 32px -6px rgba(0,41,112,0.16), 0 4px 12px rgba(0,0,0,0.05)',
+                width: '222px', zIndex: 10,
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', paddingBottom: '8px', borderBottom: '1px solid #F1F5F9' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                    <span style={{ fontSize: '12px', fontWeight: 800, color: '#0F172A' }}>Hospital Bill Analysis</span>
                   </div>
-                  <span className="completed-tag green">COMPLETED</span>
+                  <span style={{ background: '#DCFCE7', color: '#15803D', fontSize: '9px', fontWeight: 800, padding: '2px 8px', borderRadius: '9999px' }}>COMPLETED</span>
                 </div>
-
-                <div className="floating-card-items-list">
-                  <div className="bill-metric-row">
-                    <div className="metric-left">
-                      <span className="plus-sign blue">+</span>
-                      <span>Total Bill Amount</span>
+                {[
+                  { sign: '+', signColor: '#0284C7', label: 'Total Bill Amount', val: '₹2,00,000', valColor: '#0F172A' },
+                  { sign: '+', signColor: '#16A34A', label: 'Expected Insurance Payout', val: '₹1,30,000', valColor: '#16A34A' },
+                  { sign: '+', signColor: '#E11D48', label: 'Your Out-of-Pocket', val: '₹70,000', valColor: '#E11D48' },
+                ].map(({ sign, signColor, label, val, valColor }) => (
+                  <div key={label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px', fontSize: '11px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#334155', fontWeight: 600 }}>
+                      <span style={{ fontWeight: 800, fontSize: '13px', color: signColor }}>{sign}</span>
+                      {label}
                     </div>
-                    <span className="metric-amount dark">₹2,00,000</span>
+                    <span style={{ fontSize: '12px', fontWeight: 800, color: valColor }}>{val}</span>
                   </div>
-
-                  <div className="bill-metric-row">
-                    <div className="metric-left">
-                      <span className="plus-sign green">+</span>
-                      <span>Expected Insurance Payout</span>
-                    </div>
-                    <span className="metric-amount green">₹1,30,000</span>
-                  </div>
-
-                  <div className="bill-metric-row">
-                    <div className="metric-left">
-                      <span className="plus-sign coral">+</span>
-                      <span>Your Out-of-Pocket</span>
-                    </div>
-                    <span className="metric-amount coral">₹70,000</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── 3 CORE FEATURES OVERVIEW ── */}
-      <section className="features-overview">
-        <div className="container">
-          <div className="section-tag">THREE EASY STEPS</div>
-          <h2 className="section-title">Everything you need, before &amp; during hospitalisation</h2>
-          <p className="section-sub">
-            From decoding fine-print room rent limits to bridging out-of-pocket gaps at the cashier counter.
-          </p>
+      {/* ── FEATURE CARDS SECTION ── */}
+      <section style={{ background: '#F8FAFC', padding: '64px 32px' }}>
+        <div style={{ maxWidth: '1140px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+            <div style={{ display: 'inline-block', background: '#E0F2FE', color: '#0369A1', fontSize: '11px', fontWeight: 800, letterSpacing: '1px', padding: '4px 14px', borderRadius: '9999px', marginBottom: '14px' }}>THREE EASY STEPS</div>
+            <h2 style={{ fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 900, color: '#0F172A', margin: '0 0 12px' }}>Everything you need, before &amp; during hospitalisation</h2>
+            <p style={{ fontSize: '16px', color: '#64748B', maxWidth: '560px', margin: '0 auto' }}>From decoding fine-print room rent limits to bridging out-of-pocket gaps at the cashier counter.</p>
+          </div>
 
-          <div className="feature-cards">
-            {/* Step 1 */}
-            <div className="feature-card" onClick={() => navigate('/upload')}>
-              <div className="fc-step">STEP 01</div>
-              <div className="fc-icon-wrap blue">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                  <polyline points="14 2 14 8 20 8" />
-                </svg>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
+            {[
+              {
+                step: 'STEP 01', label: 'Check Insurance', color: '#EFF6FF', iconColor: '#2563EB',
+                icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>,
+                desc: 'Upload your policy document to decode sum insured, room rent limits, co-pay, and nearby network hospitals.',
+                chips: ['Policy Decoder', 'Room Capping', 'Cashless Network'], page: '/upload', linkText: 'Check Policy',
+              },
+              {
+                step: 'STEP 02', label: 'Check Claim (Bill Simulator)', color: '#F5F3FF', iconColor: '#7C3AED',
+                icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>,
+                desc: 'Upload your hospital bill and policy to see the exact financial split — ₹2,00,000 bill → ₹1,30,000 insurance → ₹70,000 you pay.',
+                chips: ['Bill Split', 'Clause Audit', 'Proportionate Penalty'], page: '/claim', linkText: 'Simulate Bill',
+              },
+              {
+                step: 'STEP 03', label: 'Paytm Financial Bridge', color: '#ECFDF5', iconColor: '#059669',
+                icon: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>,
+                desc: 'Cover any out-of-pocket gap immediately at the hospital cashier with 0% No-Cost EMI financing.',
+                chips: ['0% No-Cost EMI', '45-Day Grace', 'Direct Disbursal'], page: '/bridge', linkText: 'Explore Loans',
+              },
+            ].map(({ step, label, color, iconColor, icon, desc, chips, page, linkText }) => (
+              <div
+                key={step}
+                onClick={() => navigate(page)}
+                style={{
+                  background: '#fff', borderRadius: '20px', padding: '28px',
+                  border: '1.5px solid #E2E8F0',
+                  boxShadow: '0 4px 16px rgba(0,41,112,0.04)',
+                  cursor: 'pointer', transition: 'all 0.2s ease',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,41,112,0.1)' }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,41,112,0.04)' }}
+              >
+                <div style={{ fontSize: '10px', fontWeight: 800, letterSpacing: '1px', color: '#94A3B8', marginBottom: '14px' }}>{step}</div>
+                <div style={{ width: '52px', height: '52px', borderRadius: '14px', background: color, color: iconColor, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
+                  {icon}
+                </div>
+                <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#0F172A', margin: '0 0 10px' }}>{label}</h3>
+                <p style={{ fontSize: '13.5px', color: '#64748B', lineHeight: 1.6, margin: '0 0 16px' }}>{desc}</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
+                  {chips.map(c => (
+                    <span key={c} style={{ fontSize: '11px', fontWeight: 600, background: '#F1F5F9', color: '#475569', padding: '3px 10px', borderRadius: '9999px' }}>{c}</span>
+                  ))}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#00BAF2', fontWeight: 700, fontSize: '13.5px' }}>
+                  <span>{linkText}</span>
+                  <span>→</span>
+                </div>
               </div>
-              <h3>Check Insurance</h3>
-              <p>Upload your policy document to decode sum insured, room rent limits, co-pay, and nearby network hospitals.</p>
-              <div className="fc-chips">
-                <span className="chip">Policy Decoder</span>
-                <span className="chip">Room Capping</span>
-                <span className="chip">Cashless Network</span>
-              </div>
-              <div className="fc-link">
-                <span>Check Policy</span>
-                <span className="fc-arrow">&rarr;</span>
-              </div>
-            </div>
-
-            {/* Step 2 */}
-            <div className="feature-card" onClick={() => navigate('/claim')}>
-              <div className="fc-step">STEP 02</div>
-              <div className="fc-icon-wrap indigo">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                  <polyline points="14 2 14 8 20 8" />
-                  <line x1="16" y1="13" x2="8" y2="13" />
-                  <line x1="16" y1="17" x2="8" y2="17" />
-                </svg>
-              </div>
-              <h3>Check Claim (Bill Simulator)</h3>
-              <p>Upload your hospital bill and policy together to see the exact financial split (₹2,00,000 bill &rarr; ₹1,30,000 insurance &rarr; ₹70,000 you pay).</p>
-              <div className="fc-chips">
-                <span className="chip">Bill Split</span>
-                <span className="chip">Clause Audit</span>
-                <span className="chip">Proportionate Penalty</span>
-              </div>
-              <div className="fc-link">
-                <span>Simulate Bill</span>
-                <span className="fc-arrow">&rarr;</span>
-              </div>
-            </div>
-
-            {/* Step 3 */}
-            <div className="feature-card" onClick={() => navigate('/bridge')}>
-              <div className="fc-step">STEP 03</div>
-              <div className="fc-icon-wrap teal">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
-                  <rect x="2" y="5" width="20" height="14" rx="2" />
-                  <line x1="2" y1="10" x2="22" y2="10" />
-                </svg>
-              </div>
-              <h3>Paytm Financial Bridge</h3>
-              <p>Cover any out-of-pocket cash gap immediately at the hospital cashier counter with 0% No-Cost EMI financing.</p>
-              <div className="fc-chips">
-                <span className="chip">0% No-Cost EMI</span>
-                <span className="chip">45-Day Grace</span>
-                <span className="chip">Direct Disbursal</span>
-              </div>
-              <div className="fc-link">
-                <span>Explore Loans</span>
-                <span className="fc-arrow">&rarr;</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ── CTA BANNER ── */}
-      <section className="cta-section">
-        <div className="container">
-          <div className="cta-box">
-            <h2>Ready to decode your policy and hospital bill?</h2>
-            <p>100% paperless, secure, and powered by Paytm's trusted financial infrastructure.</p>
-            <div style={{ display: 'flex', gap: '14px', justifyContent: 'center' }}>
-              <button
-                className="btn btn-white btn-lg"
-                onClick={() => navigate('/upload')}
-              >
-                Check Insurance Now &rarr;
-              </button>
-              <button
-                className="btn btn-outline btn-lg"
-                style={{ borderColor: '#FFFFFF', color: '#FFFFFF' }}
-                onClick={() => navigate('/claim')}
-              >
-                Simulate Hospital Bill &rarr;
-              </button>
-            </div>
+      <section style={{ background: 'linear-gradient(135deg, #002970 0%, #00BAF2 100%)', padding: '64px 32px' }}>
+        <div style={{ maxWidth: '700px', margin: '0 auto', textAlign: 'center' }}>
+          <h2 style={{ fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 900, color: '#fff', margin: '0 0 14px' }}>
+            Ready to decode your policy and hospital bill?
+          </h2>
+          <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.8)', margin: '0 0 32px' }}>
+            100% paperless, secure, and powered by Paytm's trusted financial infrastructure.
+          </p>
+          <div style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button onClick={() => navigate('/upload')} style={{ background: '#fff', color: '#002970', border: 'none', fontWeight: 800, fontSize: '15px', padding: '13px 28px', borderRadius: '9999px', cursor: 'pointer', fontFamily: 'inherit' }}>
+              Check Insurance Now →
+            </button>
+            <button onClick={() => navigate('/claim')} style={{ background: 'transparent', color: '#fff', border: '2px solid rgba(255,255,255,0.6)', fontWeight: 700, fontSize: '15px', padding: '11px 26px', borderRadius: '9999px', cursor: 'pointer', fontFamily: 'inherit' }}>
+              Simulate Hospital Bill →
+            </button>
           </div>
         </div>
       </section>
