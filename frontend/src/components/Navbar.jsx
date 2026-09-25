@@ -35,10 +35,17 @@ export default function Navbar() {
   return (
     <nav className={`navbar paytm-portal-nav${scrolled ? ' scrolled' : ''}`}>
       <div className="nav-inner" style={{ maxWidth: '1280px' }}>
-        {/* Brand Logo: Paytm ClaimSaathi */}
-        <div className="paytm-main-logo" onClick={() => navigate('/')} title="ClaimSaathi by Paytm">
-          <span className="paytm-brand-dark">pay</span>
-          <span className="paytm-brand-cyan">tm</span>
+        {/* Brand Logo: paytm ❤️ ClaimSaathi */}
+        <div className="paytm-main-logo" onClick={() => navigate('/')} title="ClaimSaathi by Paytm" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '0px' }}>
+            <span className="paytm-brand-dark">pay</span>
+            <span className="paytm-brand-cyan">tm</span>
+          </span>
+          {/* Red heart */}
+          <svg width="15" height="13" viewBox="0 0 16 14" fill="none" style={{ flexShrink: 0, marginTop: '1px' }}>
+            <path d="M8 13S1 8.5 1 4.5a4 4 0 0 1 7-2.65A4 4 0 0 1 15 4.5C15 8.5 8 13 8 13z" fill="#E11D48"/>
+          </svg>
+          {/* ClaimSaathi badge */}
           <span className="paytm-logo-badge">ClaimSaathi</span>
         </div>
 
